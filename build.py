@@ -817,9 +817,13 @@ THEME_TEMPLATE = '''<!DOCTYPE html>
       <div>
         <h4>London guides</h4>
         <ul>
-          <li><a href="/london/halal/">Halal-friendly London</a></li>
-          <li><a href="/london/with-kids/">London with kids</a></li>
-          <li><a href="/london/perfect-saturday/">Perfect Saturday in London</a></li>
+          <li><a href="/london/">All guides</a></li>
+          <li><a href="/london/halal/">Halal-friendly</a></li>
+          <li><a href="/london/with-kids/">With kids</a></li>
+          <li><a href="/london/sunday-roast/">Sunday roast</a></li>
+          <li><a href="/london/fish-and-chips/">Fish &amp; chips</a></li>
+          <li><a href="/london/coffee-to-work/">Coffee to work</a></li>
+          <li><a href="/london/perfect-saturday/">Perfect Saturday</a></li>
         </ul>
       </div>
       <div>
@@ -884,6 +888,59 @@ THEMES = {
                 "q": "Which apartments are best for a Ramadan stay?",
                 "a": "Apartments near Edgware Road, Whitechapel and Aldgate — close to large halal communities, supermarkets that stock dates and prayer essentials, and several mosques for Tarawih prayers. Our larger 2-bed and 3-bed apartments suit families breaking iftar together."
             }
+        ]
+    },
+    "sunday-roast": {
+        "title": "London's best Sunday roasts",
+        "short_title": "Sunday roast",
+        "kicker": "Guest guide · Sunday roast",
+        "meta_description": "Where Londoners go for Sunday roast — the gastropubs, the dry-aged beef, and the apartments that put you closest. Hand-picked by NourNest.",
+        "intro": "Where Londoners actually go on a Sunday. Gastropub originals, Michelin pub-guide picks, and the dry-aged beef rooms — plus which of our apartments put you closest.",
+        "sections": [
+            {"heading": "Roast destinations worth booking ahead", "tag": "sunday-roast", "anchor": "eat"},
+        ],
+        "anchor_point": (51.5253, -0.1067),
+        "faqs": [
+            {"q": "What time should I book a Sunday roast?", "a": "Most destination roasts (Hawksmoor, The Marksman, The Pig & Butcher) book up two to three weeks ahead. Two seatings is typical: midday or 14:30. Walk-ups work at no-bookings pubs like The Anchor & Hope — get there before noon."},
+            {"q": "What's a London Sunday roast like?", "a": "Sunday roasts are the British weekend ritual. Expect a generous plate of slow-roasted meat (beef, lamb, pork or chicken), Yorkshire pudding, roast potatoes, seasonal vegetables, and gravy. Most pubs do it 12:00-16:00, often only on Sundays."},
+            {"q": "Are Sunday roasts kid-friendly?", "a": "Yes — most gastropubs welcome kids until about 18:00. Several do dedicated kids' roasts at half the price. Tell us your kids' ages when you book the apartment and we'll point you to the nearest family-friendly roast pub."},
+            {"q": "Is there a vegetarian Sunday roast option?", "a": "Most destination roasts now offer a proper vegetarian or vegan main — nut roast, mushroom Wellington, or roasted vegetable plate with all the trimmings. Always call to confirm the day of."},
+            {"q": "Which apartment is best for Sunday roast hunting?", "a": "Apartments in Clerkenwell, Farringdon, Islington, Hackney and Shoreditch — these are the gastropub-dense neighbourhoods. The Eagle, The Marksman, The Pig & Butcher and Hawksmoor Spitalfields are all walking distance from our properties there."}
+        ]
+    },
+    "fish-and-chips": {
+        "title": "London's best fish & chips",
+        "short_title": "fish & chips",
+        "kicker": "Guest guide · Fish & chips",
+        "meta_description": "London's classic fish and chip shops — the 1914 chippies, the sit-down restaurants, the modern sustainable ones. Walking distance from NourNest apartments across the city.",
+        "intro": "The 1914-old chippies, the white-tablecloth sit-down shops, and the modern sustainable upstarts. Where to eat properly battered cod when you visit London.",
+        "sections": [
+            {"heading": "Classic London chippies", "tag": "fish-and-chips", "anchor": "eat"},
+        ],
+        "anchor_point": (51.5199, -0.1494),
+        "faqs": [
+            {"q": "What's a proper London fish & chips?", "a": "Beer-battered white fish (cod, haddock or pollock) and thick-cut chips, served with mushy peas, tartare sauce and a wedge of lemon. The classics use beef dripping for the chips — modern shops use vegetable oil. Both are great."},
+            {"q": "Sit-down or takeaway?", "a": "Both work. Takeaways like Poppies and Golden Hind are quicker and cheaper — eat by the river or in the apartment. Sit-down shops like Geales and The Sea Shell are full meals with starters, wine list, the works."},
+            {"q": "Is fish & chips gluten-free?", "a": "Traditionally no — the batter is wheat flour. But several shops do gluten-free batter on request or fixed days (Kerbisher & Malt is reliable). Phone ahead to confirm."},
+            {"q": "When did fish & chips become a London thing?", "a": "Joseph Malin opened London's first fish & chip shop in 1860, on Cleveland Street near our Fitzrovia apartments. By 1910 there were 25,000 chippies in the UK — it's the original British fast food."}
+        ]
+    },
+    "coffee-to-work": {
+        "title": "London coffee shops to work from",
+        "short_title": "coffee shops to work from",
+        "kicker": "Guest guide · Remote work",
+        "meta_description": "Best London coffee shops to work from — fast wifi, plug sockets, communal tables, proper specialty coffee. Walking distance from NourNest apartments across the city.",
+        "intro": "Specialty coffee, communal tables, fast wifi, and the apartments that put you on the doorstep. Hand-picked for long stays, project trips and digital nomads.",
+        "sections": [
+            {"heading": "Specialty cafes with proper laptop tables", "tag": "coffee-to-work", "anchor": "eat"},
+        ],
+        "anchor_point": (51.5208, -0.1101),
+        "faqs": [
+            {"q": "Do these cafes welcome laptop users?", "a": "These are the ones that genuinely do. Many central London cafes ban laptops at peak times — these don't. Workshop, Caravan and Allpress have communal tables purpose-built for long stints. Monmouth is tighter on space but tolerant. Always order more than one coffee in two hours as a courtesy."},
+            {"q": "Do our apartments have desks?", "a": "Yes — every NourNest apartment is workstation-ready. Proper desk or dining table, ergonomic chair, fast wifi (we test every property), and good light. Many guests prefer the apartment for calls and the cafe for focus work."},
+            {"q": "What's the wifi speed in your apartments?", "a": "We aim for at least 100 Mbps download in every apartment, with the actual speeds shown on each property page. If your work needs more (video calls, large file transfers), tell us and we'll match you to the fastest apartment in the area you want."},
+            {"q": "Which neighbourhood is best for remote workers?", "a": "Clerkenwell, Farringdon and King's Cross — the highest density of specialty coffee, work-friendly cafes, and quiet neighbourhood pubs for after-work drinks. Our apartments in these areas are popular with long-stay guests for this reason."},
+            {"q": "Do you offer monthly rates for long stays?", "a": "Yes — anything 28 nights or longer gets a discounted monthly rate. Tell us when you book and we'll send you the long-stay quote. Mid-stay cleans are included on stays over 14 nights."}
         ]
     },
     "with-kids": {
@@ -994,6 +1051,169 @@ def render_theme_listing_card(item, pics):
         f'  </div>\n'
         f'</a>'
     )
+
+
+LONDON_INDEX_TEMPLATE = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>London guides — NourNest Apartments</title>
+<meta name="description" content="London guides hand-picked by the team who manages our apartments. Halal-friendly, family stays, Sunday roast, fish and chips, coffee shops to work from, and a perfect Saturday itinerary.">
+<link rel="canonical" href="https://nournestapartments.com/london/">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+{{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "London guides",
+  "description": "London guides hand-picked by NourNest — themed restaurant, attraction and itinerary collections paired with the closest apartments.",
+  "url": "https://nournestapartments.com/london/",
+  "isPartOf": {{ "@type": "WebSite", "name": "NourNest Apartments", "url": "https://nournestapartments.com/" }}
+}}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<style>
+  .index-hero {{ padding: 5rem 0 2rem; background: var(--bg-soft); }}
+  .index-hero .kicker {{ color: var(--orange); }}
+  .index-hero h1 {{ max-width: 24ch; margin: 0.4rem 0 1.2rem; }}
+  .index-hero p.lead {{ max-width: 56ch; color: var(--ink-soft); font-size: 1.15rem; line-height: 1.55; }}
+
+  .guides-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.75rem; margin: 3rem 0; }}
+  .guide-card {{ background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem 1.75rem 1.75rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: box-shadow 0.25s, transform 0.25s; }}
+  .guide-card:hover {{ box-shadow: var(--shadow-lg); transform: translateY(-3px); }}
+  .guide-card .guide-tag {{ font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.7rem; }}
+  .guide-card h3 {{ font-family: var(--serif); font-size: 1.35rem; margin: 0 0 0.7rem; color: var(--ink); }}
+  .guide-card p {{ color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; margin: 0 0 1.2rem; flex: 1; }}
+  .guide-card .guide-link {{ font-size: 0.9rem; color: var(--green); font-weight: 500; }}
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
+    <ul>
+      <li><a href="/listings/">Apartments</a></li>
+      <li><a href="/london/">London guides</a></li>
+      <li><a href="/property-management/">Management</a></li>
+      <li><a href="/private-residences/">Private Residences</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <a href="https://nournestapartments.bookingsboom.com/?lang=en" class="btn small nav-cta" target="_blank" rel="noopener">Book a stay</a>
+  </div>
+</nav>
+
+<header class="index-hero">
+  <div class="container">
+    <div class="kicker">Guest guides</div>
+    <h1>London, the way locals would walk you through it.</h1>
+    <p class="lead">Themed guides written by the team who manages our apartments — restaurants, attractions and itineraries, paired with the closest properties so you can plan a stay without flicking between tabs.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="guides-grid">
+      {guides_html}
+    </div>
+    <p style="text-align: center; color: var(--muted);">Looking for the master London list? See our <a href="/discover/">curated London places</a> — 67 hand-picked restaurants, bars, museums and walks.</p>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <div class="kicker">Plan your stay</div>
+    <h2>Tell us what kind of London you want.</h2>
+    <p>Halal-friendly, family-with-kids, a working week, a Sunday roast weekend — message us with how you'd like the trip to feel and we'll match you to the right apartment.</p>
+    <a href="/contact/" class="btn">Ask for a recommendation</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="logo" style="display: inline-block; margin-bottom: 1rem;" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="56"></a>
+        <p>Boutique short-let management and curated guest experience for London properties. Director-led. Independently run.</p>
+      </div>
+      <div>
+        <h4>Stays</h4>
+        <ul>
+          <li><a href="/listings/">All apartments</a></li>
+          <li><a href="/discover/">Discover London</a></li>
+          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Search availability</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>London guides</h4>
+        <ul>
+          {footer_guides_html}
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@nournestapartments.com">hello@nournestapartments.com</a></li>
+          <li><a href="tel:+447802666672">+44 7802 666 672</a></li>
+          <li><a href="/contact/">Send a message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 NourNest Ltd. Company 16629708. Registered in England &amp; Wales.</div>
+      <div>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+'''
+
+
+def build_london_index(extra_pages=None):
+    """Write /london/index.html — the guides hub."""
+    london_dir = ROOT / "london"
+    london_dir.mkdir(exist_ok=True)
+    cards = []
+    footer_links = []
+    for slug, theme in THEMES.items():
+        cards.append(
+            f'      <a href="/london/{slug}/" class="guide-card">\n'
+            f'        <div class="guide-tag">{theme["kicker"]}</div>\n'
+            f'        <h3>{theme["title"]}</h3>\n'
+            f'        <p>{theme["intro"][:140]}{"..." if len(theme["intro"]) > 140 else ""}</p>\n'
+            f'        <span class="guide-link">Read the guide →</span>\n'
+            f'      </a>'
+        )
+        footer_links.append(f'<li><a href="/london/{slug}/">{theme["title"]}</a></li>')
+    if extra_pages:
+        for slug, page in extra_pages.items():
+            cards.append(
+                f'      <a href="/london/{slug}/" class="guide-card">\n'
+                f'        <div class="guide-tag">{page["kicker"]}</div>\n'
+                f'        <h3>{page["title"]}</h3>\n'
+                f'        <p>{page["intro"][:140]}{"..." if len(page["intro"]) > 140 else ""}</p>\n'
+                f'        <span class="guide-link">Read the itinerary →</span>\n'
+                f'      </a>'
+            )
+            footer_links.append(f'<li><a href="/london/{slug}/">{page["title"]}</a></li>')
+    guides_html = "\n".join(cards)
+    footer_guides_html = "\n          ".join(footer_links)
+    page = LONDON_INDEX_TEMPLATE.format(guides_html=guides_html, footer_guides_html=footer_guides_html)
+    (london_dir / "index.html").write_text(page, encoding="utf-8")
+    print(f"Wrote /london/ index ({len(cards)} guides)")
 
 
 def build_theme_pages(listings, places, pics):
@@ -1218,9 +1438,13 @@ ITINERARY_TEMPLATE = '''<!DOCTYPE html>
       <div>
         <h4>London guides</h4>
         <ul>
-          <li><a href="/london/halal/">Halal-friendly London</a></li>
-          <li><a href="/london/with-kids/">London with kids</a></li>
-          <li><a href="/london/perfect-saturday/">Perfect Saturday in London</a></li>
+          <li><a href="/london/">All guides</a></li>
+          <li><a href="/london/halal/">Halal-friendly</a></li>
+          <li><a href="/london/with-kids/">With kids</a></li>
+          <li><a href="/london/sunday-roast/">Sunday roast</a></li>
+          <li><a href="/london/fish-and-chips/">Fish &amp; chips</a></li>
+          <li><a href="/london/coffee-to-work/">Coffee to work</a></li>
+          <li><a href="/london/perfect-saturday/">Perfect Saturday</a></li>
         </ul>
       </div>
       <div>
@@ -1376,8 +1600,12 @@ SITEMAP_HEAD = '''<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>https://nournestapartments.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://nournestapartments.com/listings/</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://nournestapartments.com/discover/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nournestapartments.com/london/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/london/halal/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/london/with-kids/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nournestapartments.com/london/sunday-roast/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nournestapartments.com/london/fish-and-chips/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nournestapartments.com/london/coffee-to-work/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/london/perfect-saturday/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/property-management/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/about/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -1410,6 +1638,7 @@ def main():
     build_property_pages(listings, pics, places)
     build_theme_pages(listings, places, pics)
     build_itinerary_pages(listings, places, pics)
+    build_london_index(extra_pages={"perfect-saturday": ITINERARY_PERFECT_SATURDAY})
     build_sitemap(listings)
 
 
