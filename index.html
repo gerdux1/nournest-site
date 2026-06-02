@@ -3,48 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NourNest Apartments — Short-let management and curated guest experience for London properties</title>
-<meta name="description" content="NourNest curates boutique short-let apartments across London. Director-led management, considered hospitality, and a single point of accountability. 51 apartments live across Central and Greater London.">
+<title>NourNest Apartments — London serviced apartments with concierge, direct bookings only</title>
+<meta name="description" content="Boutique London apartments. Welcome hamper on arrival, 24/7 WhatsApp concierge, free late check-out — only when you book direct with us. 49 apartments across 26 London neighbourhoods.">
 
 <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://nournestapartments.com/">
 
-<!-- Open Graph -->
-<meta property="og:title" content="NourNest Apartments — Boutique Short-let Management in London">
-<meta property="og:description" content="Director-led short-let management and curated guest experience across London. 51 apartments. Book directly.">
+<meta property="og:title" content="NourNest Apartments — Boutique London serviced apartments with concierge">
+<meta property="og:description" content="A London stay you'll want to come back to. Welcome hamper, 24/7 concierge, free late check-out — direct bookings only.">
 <meta property="og:url" content="https://nournestapartments.com/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_GB">
 
-<!-- Schema.org for AI search (Google AI Overviews, Perplexity, ChatGPT) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
   "name": "NourNest Apartments",
   "alternateName": "NourNest",
-  "description": "Boutique short-let property management and curated guest experience across London. Director-led, independently managed.",
+  "description": "Boutique London serviced apartments. Welcome hamper, 24/7 WhatsApp concierge, free late check-out on direct bookings. 49 apartments across 26 London neighbourhoods.",
   "url": "https://nournestapartments.com",
   "telephone": "+44 7802 666672",
   "email": "hello@nournestapartments.com",
-  "areaServed": {
-    "@type": "City",
-    "name": "London",
-    "addressCountry": "GB"
-  },
+  "areaServed": { "@type": "City", "name": "London", "addressCountry": "GB" },
   "priceRange": "££-£££",
   "amenityFeature": [
-    {"@type": "LocationFeatureSpecification", "name": "Director-led management"},
-    {"@type": "LocationFeatureSpecification", "name": "24/7 guest support"},
-    {"@type": "LocationFeatureSpecification", "name": "Designed for stays of 3 nights to 3 months"},
-    {"@type": "LocationFeatureSpecification", "name": "Concierge and lifestyle services"}
-  ],
-  "parentOrganization": {
-    "@type": "Organization",
-    "name": "NourNest Ltd",
-    "legalName": "NourNest Ltd",
-    "identifier": "Company 16629708"
-  }
+    {"@type": "LocationFeatureSpecification", "name": "Welcome hamper on arrival"},
+    {"@type": "LocationFeatureSpecification", "name": "24/7 WhatsApp concierge"},
+    {"@type": "LocationFeatureSpecification", "name": "Free late check-out on direct bookings"},
+    {"@type": "LocationFeatureSpecification", "name": "Workstation-ready apartments"},
+    {"@type": "LocationFeatureSpecification", "name": "Curated London guides"},
+    {"@type": "LocationFeatureSpecification", "name": "Restaurant reservations made for you"},
+    {"@type": "LocationFeatureSpecification", "name": "Airport transfers and private drivers"}
+  ]
 }
 </script>
 
@@ -52,6 +43,71 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/main.css">
+
+<style>
+  .perks-strip {
+    background: var(--bg-soft);
+    padding: 2.5rem 0;
+    margin-top: -1px;
+  }
+  .perks-strip .container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .perk {
+    text-align: left;
+    padding-left: 1rem;
+    border-left: 2px solid var(--gold);
+  }
+  .perk .perk-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.4rem;
+  }
+  .perk .perk-line {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .perk .perk-line strong { font-weight: 600; }
+  @media (max-width: 900px) {
+    .perks-strip .container { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  }
+  @media (max-width: 540px) {
+    .perks-strip .container { grid-template-columns: 1fr; }
+  }
+
+  .concierge-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 2.5rem;
+    margin-top: 2rem;
+  }
+  .concierge-list .item {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .concierge-list .item .arr {
+    color: var(--cta); font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+  .concierge-list .item h4 { margin: 0 0 0.15rem; font-family: var(--sans); font-size: 1rem; font-weight: 500; color: var(--ink); }
+  .concierge-list .item p { margin: 0; font-size: 0.88rem; color: var(--muted); }
+  @media (max-width: 700px) {
+    .concierge-list { grid-template-columns: 1fr; }
+  }
+
+  .landlord-strip {
+    background: var(--bg-soft);
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .landlord-strip .container { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .landlord-strip h3 { margin: 0; font-size: 1.3rem; }
+  .landlord-strip p { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.92rem; }
+</style>
 </head>
 <body>
 
@@ -61,8 +117,7 @@
     <ul>
       <li><a href="/listings/">Apartments</a></li>
       <li><a href="/discover/">Discover London</a></li>
-      <li><a href="/property-management/">Management</a></li>
-      <li><a href="/private-residences/">Private Residences</a></li>
+      <li><a href="#concierge">Concierge</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
@@ -73,24 +128,45 @@
 <section class="hero">
   <div class="container">
     <div class="hero-text">
-      <div class="kicker">Boutique short-let management · London</div>
-      <h1>A nest in London, kept ready for the stay you actually want.</h1>
-      <p class="lead">NourNest manages a hand-picked collection of London apartments and looks after the guests who stay in them. Director-led, considered, independently run. We hold the keys, set the standard, and keep things quietly working.</p>
+      <div class="kicker">Serviced apartments · London</div>
+      <h1>More than a flat. A London stay you'll want to come back to.</h1>
+      <p class="lead">Hand-picked boutique apartments across 26 London neighbourhoods, looked after by people — not platforms. Direct bookings include a welcome hamper, 24/7 concierge, and free late check-out.</p>
       <div class="hero-cta">
-        <a href="/listings/" class="btn">Browse apartments</a>
-        <a href="/property-management/" class="btn ghost">For landlords</a>
+        <a href="/listings/" class="btn">Find your stay</a>
+        <a href="#concierge" class="btn ghost">What's included</a>
       </div>
     </div>
     <div class="hero-image"></div>
   </div>
 </section>
 
+<div class="perks-strip">
+  <div class="container">
+    <div class="perk">
+      <div class="perk-label">On arrival</div>
+      <div class="perk-line"><strong>Welcome hamper</strong> — local treats, fresh flowers, real coffee</div>
+    </div>
+    <div class="perk">
+      <div class="perk-label">During your stay</div>
+      <div class="perk-line"><strong>24/7 WhatsApp concierge</strong> — real people, day or night</div>
+    </div>
+    <div class="perk">
+      <div class="perk-label">Checking out</div>
+      <div class="perk-line"><strong>Free late check-out</strong> until 2pm, subject to availability</div>
+    </div>
+    <div class="perk">
+      <div class="perk-label">Always</div>
+      <div class="perk-line"><strong>No platform fees</strong> when you book direct with us</div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="trust">
     <strong>Recognised by</strong>
     <span>Luxury Lifestyle Awards 2024</span>
     <span>Booking.com Traveller Review</span>
-    <span>51 apartments · Greater London</span>
+    <span>49 apartments · 26 neighbourhoods</span>
     <span>4.8 · 600+ guest reviews</span>
   </div>
 </div>
@@ -99,11 +175,11 @@
   <div class="container">
     <div class="section-head">
       <div>
-        <div class="kicker">Live now</div>
-        <h2>A few stays we'd suggest first.</h2>
+        <div class="kicker">Where you could stay</div>
+        <h2>A few we'd suggest first.</h2>
         <p>From Mayfair to Shoreditch — apartments we know well, available to book direct.</p>
       </div>
-      <a href="/listings/" class="btn ghost">View all 51 apartments</a>
+      <a href="/listings/" class="btn ghost">See all 49 apartments</a>
     </div>
 
     <div class="properties-grid">
@@ -132,27 +208,100 @@
   </div>
 </section>
 
-<section class="section bg-soft">
+<section class="section bg-soft" id="concierge">
   <div class="container">
-    <div class="kicker">Why NourNest</div>
-    <h2 style="max-width: 24ch; margin-bottom: 3rem;">Quiet, consistent, accountable.</h2>
-    <div class="why-grid">
-      <div class="why-item">
-        <div class="num">01</div>
-        <h3>Director-led management</h3>
-        <p>Gerda Micke is the named contact and the person accountable for every apartment we manage. One relationship, not a call centre.</p>
+    <div class="kicker">Concierge</div>
+    <h2 style="max-width: 26ch; margin-bottom: 1rem;">Things we can arrange for you.</h2>
+    <p style="max-width: 60ch; color: var(--muted);">Tell us what you're after. We answer every message ourselves — usually within minutes during the day, always within the hour. WhatsApp first, phone for the urgent stuff.</p>
+
+    <div class="concierge-list">
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Welcome hamper on arrival</h4>
+          <p>Local treats, fresh flowers, fridge stocked the way you'd like.</p>
+        </div>
       </div>
-      <div class="why-item">
-        <div class="num">02</div>
-        <h3>Independently run, never franchised</h3>
-        <p>Every apartment is operated by our own team. We know which window catches the morning sun and which heating switch is temperamental.</p>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Airport transfers &amp; private drivers</h4>
+          <p>Heathrow, Gatwick, City. Booked ahead or last-minute.</p>
+        </div>
       </div>
-      <div class="why-item">
-        <div class="num">03</div>
-        <h3>Built for stays that need to feel like home</h3>
-        <p>Workstation-ready, fully equipped kitchens, washer-dryers, reliable Wi-Fi. Designed for nights, weeks, or months — not a hotel stopover.</p>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Restaurant reservations</h4>
+          <p>The Ivy, Sketch, Dishoom — wherever you'd like a table.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Theatre &amp; member-club access</h4>
+          <p>West End shows, exhibition openings, member-club guest passes.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Pre-arrival grocery shop</h4>
+          <p>Tell us your essentials and the fridge is stocked when you walk in.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Private chef &amp; in-home dining</h4>
+          <p>Breakfast, dinner party, intimate celebration — at your apartment.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Family essentials</h4>
+          <p>Cot, high chair, baby monitor, child-safe additions — on request.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Pet-friendly apartments</h4>
+          <p>A selection of apartments welcome dogs. Just ask before booking.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Hair, beauty &amp; spa at home</h4>
+          <p>Trusted London therapists who'll come to the apartment.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Birthday &amp; occasion setups</h4>
+          <p>Champagne, flowers, cake, balloons — set up before you arrive.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>Mid-stay cleaning &amp; laundry</h4>
+          <p>Built into longer stays. Available on request for short ones.</p>
+        </div>
+      </div>
+      <div class="item">
+        <span class="arr">→</span>
+        <div>
+          <h4>London advice, made personal</h4>
+          <p>A curated answer for your trip — not a generic city guide.</p>
+        </div>
       </div>
     </div>
+
+    <p style="margin-top: 2.5rem; color: var(--muted); font-size: 0.92rem;">All concierge services are at-cost and arranged on request. No mark-ups, no kickbacks — you pay the supplier directly where possible.</p>
   </div>
 </section>
 
@@ -160,11 +309,11 @@
   <div class="container">
     <div class="section-head">
       <div>
-        <div class="kicker">Locations</div>
-        <h2>Find your London neighbourhood.</h2>
-        <p>From quiet garden squares to high-street energy — choose where you'd want to wake up.</p>
+        <div class="kicker">Find your neighbourhood</div>
+        <h2>Choose where you'd want to wake up.</h2>
+        <p>From quiet garden squares to high-street energy — 49 apartments across 26 London neighbourhoods.</p>
       </div>
-      <a href="/listings/" class="btn ghost">Browse all locations</a>
+      <a href="/discover/" class="btn ghost">Browse London guide</a>
     </div>
     <div class="areas-grid">
       <a href="/listings/?area=mayfair" class="area-tile">Mayfair</a>
@@ -179,26 +328,12 @@
   <div class="container">
     <div class="split">
       <div>
-        <div class="kicker" style="color: var(--gold);">For landlords</div>
-        <h2>Got a London apartment? We'll look after it like it's our own.</h2>
-        <p>We work with a small number of landlords across London to manage their apartments end-to-end — listing, guests, concierge, compliance. Director-led, retainer-based, no surprises.</p>
-        <a href="/property-management/" class="btn">Talk about management</a>
+        <div class="kicker" style="color: var(--gold);">Stay longer</div>
+        <h2>For stays of a week, a month, or longer.</h2>
+        <p>Designed for the way people actually travel — relocations, projects, extended visits. Workstation-ready apartments, fully equipped kitchens, washer-dryers, fast Wi-Fi. Mid-stay cleans included on stays over 14 nights. Long-stay rates from 7 nights.</p>
+        <a href="/contact/?topic=long-stay" class="btn">Ask about long stays</a>
       </div>
       <div class="split-image"></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="split reverse">
-      <div class="split-image" style="background: linear-gradient(135deg, var(--ink), var(--green));"></div>
-      <div>
-        <div class="kicker">Private Residences</div>
-        <h2>Stewardship for homes that aren't for the open market.</h2>
-        <p>NourNest Private Residences looks after London homes that are not listed publicly. Director-led, NDA-standard discretion, retainer-based. For homeowners, family offices, and developers releasing prime stock.</p>
-        <a href="/private-residences/" class="btn ghost">By appointment only</a>
-      </div>
     </div>
   </div>
 </section>
@@ -206,33 +341,44 @@
 <section class="cta-strip">
   <div class="container">
     <div class="kicker">Ready when you are</div>
-    <h2>Stay in one of London's quieter addresses.</h2>
-    <p>Book direct — no platform fees, no middleman. We're a WhatsApp away if you need us.</p>
+    <h2>Book direct. Stay better.</h2>
+    <p>Welcome hamper, 24/7 concierge, free late check-out — only when you book through us, not through a platform.</p>
     <a href="https://nournestapartments.bookingsboom.com/?lang=en" class="btn" target="_blank" rel="noopener">Search availability</a>
   </div>
 </section>
+
+<div class="landlord-strip">
+  <div class="container">
+    <div>
+      <h3>Got a London apartment?</h3>
+      <p>We manage a small number of London apartments end-to-end for landlords. Director-led, retainer-based, no franchise fees.</p>
+    </div>
+    <a href="/property-management/" class="btn ghost">For landlords</a>
+  </div>
+</div>
 
 <footer class="site">
   <div class="container">
     <div class="footer-grid">
       <div>
         <a href="/" class="logo" style="display: inline-block; margin-bottom: 1rem;" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="56"></a>
-        <p>Boutique short-let management and curated guest experience for London properties. Director-led. Independently run.</p>
+        <p>Boutique London serviced apartments with 24/7 concierge. 49 apartments across 26 London neighbourhoods.</p>
       </div>
       <div>
-        <h4>Stays</h4>
+        <h4>Stay</h4>
         <ul>
           <li><a href="/listings/">All apartments</a></li>
-          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Search availability</a></li>
-          <li><a href="/listings/?stay=long">Long stays</a></li>
+          <li><a href="/discover/">Discover London</a></li>
+          <li><a href="#concierge">Concierge services</a></li>
+          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Book a stay</a></li>
         </ul>
       </div>
       <div>
-        <h4>For owners</h4>
+        <h4>The business</h4>
         <ul>
+          <li><a href="/about/">About NourNest</a></li>
           <li><a href="/property-management/">Property Management</a></li>
           <li><a href="/private-residences/">Private Residences</a></li>
-          <li><a href="/about/">About NourNest</a></li>
         </ul>
       </div>
       <div>
