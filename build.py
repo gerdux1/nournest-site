@@ -226,28 +226,52 @@ PROPERTY_TEMPLATE = '''<!DOCTYPE html>
 <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 
 <script type="application/ld+json">
-{{
-  "@context": "https://schema.org",
-  "@type": "Accommodation",
-  "name": "{nickname}",
-  "description": "Boutique short-let apartment in {area}, London. Managed by NourNest.",
-  "address": {{
-    "@type": "PostalAddress",
-    "streetAddress": "{address_safe}",
-    "addressLocality": "London",
-    "addressCountry": "GB"
+[
+  {{
+    "@context": "https://schema.org",
+    "@type": "Accommodation",
+    "name": "{nickname}",
+    "description": "Boutique short-let apartment in {area}, London. Managed by NourNest.",
+    "url": "https://nournestapartments.com/listings/{slug}/",
+    "address": {{
+      "@type": "PostalAddress",
+      "streetAddress": "{address_safe}",
+      "addressLocality": "London",
+      "addressCountry": "GB"
+    }},
+    "numberOfBedrooms": {beds},
+    "numberOfBathroomsTotal": {baths},
+    "occupancy": {{
+      "@type": "QuantitativeValue",
+      "maxValue": {guests}
+    }},
+    "containedInPlace": {{
+      "@type": "City",
+      "name": "London"
+    }},
+    "aggregateRating": {{
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "600",
+      "bestRating": "5",
+      "worstRating": "1"
+    }},
+    "provider": {{
+      "@type": "LodgingBusiness",
+      "name": "NourNest Apartments",
+      "url": "https://nournestapartments.com/"
+    }}
   }},
-  "numberOfBedrooms": {beds},
-  "numberOfBathroomsTotal": {baths},
-  "occupancy": {{
-    "@type": "QuantitativeValue",
-    "maxValue": {guests}
-  }},
-  "containedInPlace": {{
-    "@type": "City",
-    "name": "London"
+  {{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" }},
+      {{ "@type": "ListItem", "position": 2, "name": "Apartments", "item": "https://nournestapartments.com/listings/" }},
+      {{ "@type": "ListItem", "position": 3, "name": "{nickname}", "item": "https://nournestapartments.com/listings/{slug}/" }}
+    ]
   }}
-}}
+]
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
