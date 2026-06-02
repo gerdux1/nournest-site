@@ -2,9 +2,59 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://nournestapartments.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://nournestapartments.com/listings/</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://nournestapartments.com/discover/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/property-management/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/about/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://nournestapartments.com/contact/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://nournestapartments.com/privacy/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://nournestapartments.com/terms/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://nournestapartments.com/listings/old-st-basement-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/shepherds-bush-2-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-f-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/new-malden-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/hoxton-flat-8-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/baker-st-2-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-l-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/embankment-lukasz/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-e-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/farringdon-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/edgware-rd-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/88-battersea-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/hammersmith-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/pimlico-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/london-bridge-lukasz/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/crouch-end-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/old-st-flat-2-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-d-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/hackney-1b-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/hoxton-flat-6-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-w-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/queens-park-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/vauxhall-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/finsbury-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/euston-2-szymon-flat-2/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/kings-cross-anna/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/old-st-flat-3-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-3-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/old-st-flat-1-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/63-king-s-cross-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/little-venice-2-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/aldgate-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/askew-road-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/atholl-house-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/holloway-lukasz/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/kensington-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/little-venice-1-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/liverpool-rd-lukasz/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/163-new-kent-rd-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/maida-vale-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/green-lanes-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/kilburn-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-n-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/shepherd-s-bush-blaze/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/russell-square-flat-34-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/regents-flat-m-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/tower-hill-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/shoreditch-flat-5-szymon/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://nournestapartments.com/listings/mayfair-2bed/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>
