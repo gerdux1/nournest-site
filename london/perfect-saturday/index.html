@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A perfect Saturday in London — NourNest Apartments</title>
+<meta name="description" content="A perfect Saturday in London — hour by hour. Brunch in Shoreditch, Columbia Road flowers, Borough Market lunch, Hyde Park walk, pub dinner. Curated by NourNest, locals who manage apartments here.">
+<link rel="canonical" href="https://nournestapartments.com/london/perfect-saturday/">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "A perfect Saturday in London",
+    "description": "A perfect Saturday in London — hour by hour. Brunch in Shoreditch, Columbia Road flowers, Borough Market lunch, Hyde Park walk, pub dinner. Curated by NourNest, locals who manage apartments here.",
+    "url": "https://nournestapartments.com/london/perfect-saturday/",
+    "numberOfItems": 8,
+    "itemListOrder": "https://schema.org/ItemListOrderAscending",
+    "itemListElement": [      { "@type": "ListItem", "position": 1, "name": "08:30 — Brunch at Dishoom Shoreditch" },
+      { "@type": "ListItem", "position": 2, "name": "10:00 — Columbia Road Flower Market" },
+      { "@type": "ListItem", "position": 3, "name": "12:00 — Borough Market for lunch" },
+      { "@type": "ListItem", "position": 4, "name": "14:30 — South Bank walk to the South Kensington museums" },
+      { "@type": "ListItem", "position": 5, "name": "16:30 — Hyde Park or Kensington Gardens" },
+      { "@type": "ListItem", "position": 6, "name": "18:30 — Pub stop in Clerkenwell" },
+      { "@type": "ListItem", "position": 7, "name": "20:00 — Dinner at St. John" },
+      { "@type": "ListItem", "position": 8, "name": "22:30 — Nightcap at Nightjar" }]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [      { "@type": "Question", "name": "Does this itinerary work on a Sunday?", "acceptedAnswer": { "@type": "Answer", "text": "Mostly yes — Columbia Road Flower Market is famously a Sunday-only event so swap that in. Borough Market is closed on Sundays, so swap it for a long Sunday roast at The Eagle Farringdon or St. John instead." } },
+      { "@type": "Question", "name": "How much walking is involved?", "acceptedAnswer": { "@type": "Answer", "text": "About 6-8 km across the day, broken up by Tube and Uber. Comfortable shoes essential. If you're not up for walking, the whole itinerary works as Uber stops." } },
+      { "@type": "Question", "name": "Can we do this with kids?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — kids will love the Borough Market, the Natural History Museum (free), the Diana playground (free), and the river walk. Swap Nightjar for an earlier dinner. See our [London with kids](/london/with-kids/) guide for more." } },
+      { "@type": "Question", "name": "Which apartment is best-placed for this itinerary?", "acceptedAnswer": { "@type": "Answer", "text": "Anything in Shoreditch, Hoxton, Old Street, Farringdon or Clerkenwell — all the stops are walking or one Tube stop away. We'll match you to a specific apartment if you tell us guest count and dates." } }]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" },
+      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/discover/" },
+      { "@type": "ListItem", "position": 3, "name": "A perfect Saturday in London", "item": "https://nournestapartments.com/london/perfect-saturday/" }
+    ]
+  }
+]
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<style>
+  .theme-hero { padding: 5rem 0 2rem; background: var(--bg-soft); }
+  .theme-hero .kicker { color: var(--orange); }
+  .theme-hero h1 { max-width: 22ch; margin: 0.4rem 0 1.2rem; }
+  .theme-hero p.lead { max-width: 56ch; color: var(--ink-soft); font-size: 1.15rem; line-height: 1.55; }
+
+  .itinerary { max-width: 760px; margin: 3rem 0; }
+  .stop { display: grid; grid-template-columns: 90px 1fr; column-gap: 2rem; padding: 1.8rem 0; border-bottom: 1px dashed var(--line); position: relative; }
+  .stop:last-child { border-bottom: none; }
+  .stop .time { font-family: var(--serif); color: var(--orange); font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+  .stop h3 { font-family: var(--serif); margin: 0 0 0.5rem; font-size: 1.3rem; color: var(--ink); }
+  .stop h3 a { color: var(--ink); text-decoration: none; }
+  .stop h3 a:hover { color: var(--orange); }
+  .stop .note { color: var(--ink-soft); margin: 0; line-height: 1.55; }
+
+  .listings-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.5rem 0 3rem; }
+  .listings-strip .property-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.2s; }
+  .listings-strip .property-card:hover { box-shadow: var(--shadow-lg); }
+  .listings-strip .property-card .img { aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-soft), var(--green)); }
+  .listings-strip .property-card .img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .listings-strip .property-card .body { padding: 1rem 1.2rem 1.2rem; }
+  .listings-strip .property-card h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 0.3rem; }
+  .listings-strip .property-card .meta { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+  .faq-list { max-width: 760px; margin: 3rem 0; }
+  .faq-list details { border-bottom: 1px solid var(--line); padding: 1.2rem 0; }
+  .faq-list summary { font-family: var(--serif); font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--ink); }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary::after { content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }
+  .faq-list details[open] summary::after { content: '−'; }
+  .faq-list details p { color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
+    <ul>
+      <li><a href="/listings/">Apartments</a></li>
+      <li><a href="/discover/">Discover London</a></li>
+      <li><a href="/property-management/">Management</a></li>
+      <li><a href="/private-residences/">Private Residences</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <a href="https://nournestapartments.bookingsboom.com/?lang=en" class="btn small nav-cta" target="_blank" rel="noopener">Book a stay</a>
+  </div>
+</nav>
+
+<header class="theme-hero">
+  <div class="container">
+    <p style="margin-bottom: 0.5rem;"><a href="/discover/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <div class="kicker">Itinerary · Saturday</div>
+    <h1>A perfect Saturday in London</h1>
+    <p class="lead">Hour by hour, the Saturday a Londoner would actually plan. Brunch in the east, flowers and markets, lunch by the river, a walk through Hyde Park, pub dinner in town.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="itinerary">
+            <div class="stop">
+        <div class="time">08:30</div>
+        <div>
+          <h3><a href="/discover/#eat">Brunch at Dishoom Shoreditch</a></h3>
+          <p class="note">Get there at opening — the bacon naan roll and house chai. About 45 minutes.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="time">10:00</div>
+        <div>
+          <h3><a href="/discover/#do">Columbia Road Flower Market</a></h3>
+          <p class="note">Walk over from Shoreditch. Sunday-only is the famous day but the Saturday vibe is calmer and you can still shop the cafés on the side streets. About an hour.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="time">12:00</div>
+        <div>
+          <h3><a href="/discover/#do">Borough Market for lunch</a></h3>
+          <p class="note">Tube or Uber to London Bridge. London's oldest food market — split it: one of you queues for Bread Ahead doughnuts, the other for Padella pasta (across the road, separate). Eat by the river.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="time">14:30</div>
+        <div>
+          <h3><a href="/discover/#see">South Bank walk to the South Kensington museums</a></h3>
+          <p class="note">Walk along the river past the Tate Modern and the Eye, then Tube District line to South Kensington. The Natural History Museum is free — the blue whale hall and the dinosaurs. About 90 minutes.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="time">16:30</div>
+        <div>
+          <h3><a href="/discover/#do">Hyde Park or Kensington Gardens</a></h3>
+          <p class="note">Walk into Kensington Gardens. If you have kids the Diana playground is magical; without, walk the Serpentine and grab a coffee at the Serpentine Galleries.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="time">18:30</div>
+        <div>
+          <h3><a href="/discover/#eat">Pub stop in Clerkenwell</a></h3>
+          <p class="note">Tube to Farringdon. The Eagle is the pub that invented the gastropub. Pint, sit down, take a breath.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="time">20:00</div>
+        <div>
+          <h3><a href="/discover/#eat">Dinner at St. John</a></h3>
+          <p class="note">Five minutes' walk from the Eagle. Fergus Henderson's nose-to-tail temple — book a few weeks ahead. About two hours. If St. John is full, Morito on Exmouth Market is around the corner.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="time">22:30</div>
+        <div>
+          <h3><a href="/discover/#drink">Nightcap at Nightjar</a></h3>
+          <p class="note">Tube to Old Street. Speakeasy basement bar with live jazz Wed-Sat and world-class cocktails. Book ahead.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <h2>Apartments well-placed for this Saturday</h2>
+    <p class="lead" style="color: var(--muted); max-width: 56ch; margin: 0.4rem 0 2rem;">All within walking or one Tube stop from the morning brunch and the dinner stops.</p>
+    <div class="listings-strip">
+      <a class="property-card" href="/listings/farringdon-anna/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1738856329/tenants/Londonelite%20property%20management%20ltd/listings/Farringdon-Lukasz-OPS/pictures/_D758182_pgajjv.png" alt="Farringdon - Anna — Farringdon / Clerkenwell, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Farringdon - Anna</h3>
+    <p class="meta">2 bed · 2 bath · sleeps 8 · Farringdon / Clerkenwell</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/russell-square-flat-34-szymon/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1766166632/tenants/NourNest/listingsRusselSquareflat34pictures/WhatsApp_Image_2025-12-19_at_1.41.30_PM_1_ils2jz.png" alt="Russell Square flat 34 - Szymon — Russell Square / Bloomsbury, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Russell Square flat 34 - Szymon</h3>
+    <p class="meta">2 bed · 2 bath · sleeps 6 · Russell Square / Bloomsbury</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/shoreditch-flat-5-szymon/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1779883229/tenants/NourNest/listingsShoreditchflat5-Szymonpictures/ChatGPT_Image_May_26_2026_06_00_31_PM_u2qt8x.png" alt="Shoreditch flat 5 - Szymon — Shoreditch, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Shoreditch flat 5 - Szymon</h3>
+    <p class="meta">4 bed · 3 bath · sleeps 10 · Shoreditch</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/hoxton-flat-8-anna/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1755019277/tenants/NourNest/listings/HoxtonFlat8-Anna-Main/pictures/IMG-20250508-WA0166_zyeo84.png" alt="Hoxton Flat 8 - Anna — Hoxton, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Hoxton Flat 8 - Anna</h3>
+    <p class="meta">3 bed · 1 bath · sleeps 8 · Hoxton</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/hoxton-flat-6-szymon/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1751365452/tenants/NourNest/listings/HoxtonFlat6-Szymon%280%29-Main%289.3%29/pictures/IMG-20250415-WA0050_gt5z7c.png" alt="Hoxton Flat 6 - Szymon — Hoxton, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Hoxton Flat 6 - Szymon</h3>
+    <p class="meta">3 bed · 1 bath · sleeps 8 · Hoxton</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/old-st-basement-anna/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1753456169/tenants/NourNest/listings/OldStBasement-Lukasz-main/pictures/IMG-20250513-WA0035_el0xl1.png" alt="Old St Basement - Anna — Old Street / Shoreditch, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Old St Basement - Anna</h3>
+    <p class="meta">1 bed · 1 bath · sleeps 4 · Old Street / Shoreditch</p>
+  </div>
+</a>
+    </div>
+    <p style="text-align: center;"><a href="/listings/" class="btn">See all apartments</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Questions about this itinerary</h2>
+    <div class="faq-list">
+            <details>
+        <summary>Does this itinerary work on a Sunday?</summary>
+        <p>Mostly yes — Columbia Road Flower Market is famously a Sunday-only event so swap that in. Borough Market is closed on Sundays, so swap it for a long Sunday roast at The Eagle Farringdon or St. John instead.</p>
+      </details>
+      <details>
+        <summary>How much walking is involved?</summary>
+        <p>About 6-8 km across the day, broken up by Tube and Uber. Comfortable shoes essential. If you're not up for walking, the whole itinerary works as Uber stops.</p>
+      </details>
+      <details>
+        <summary>Can we do this with kids?</summary>
+        <p>Yes — kids will love the Borough Market, the Natural History Museum (free), the Diana playground (free), and the river walk. Swap Nightjar for an earlier dinner. See our [London with kids](/london/with-kids/) guide for more.</p>
+      </details>
+      <details>
+        <summary>Which apartment is best-placed for this itinerary?</summary>
+        <p>Anything in Shoreditch, Hoxton, Old Street, Farringdon or Clerkenwell — all the stops are walking or one Tube stop away. We'll match you to a specific apartment if you tell us guest count and dates.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <div class="kicker">Plan your stay</div>
+    <h2>Want a Saturday itinerary tailored to your group?</h2>
+    <p>Tell us guest count, kids, dietary requirements and the date — we'll send you a hand-built itinerary like this one, matched to the apartment you book.</p>
+    <a href="/contact/" class="btn">Ask for a tailored itinerary</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="logo" style="display: inline-block; margin-bottom: 1rem;" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="56"></a>
+        <p>Boutique short-let management and curated guest experience for London properties. Director-led. Independently run.</p>
+      </div>
+      <div>
+        <h4>Stays</h4>
+        <ul>
+          <li><a href="/listings/">All apartments</a></li>
+          <li><a href="/discover/">Discover London</a></li>
+          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Search availability</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>London guides</h4>
+        <ul>
+          <li><a href="/london/halal/">Halal-friendly London</a></li>
+          <li><a href="/london/with-kids/">London with kids</a></li>
+          <li><a href="/london/perfect-saturday/">Perfect Saturday in London</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@nournestapartments.com">hello@nournestapartments.com</a></li>
+          <li><a href="tel:+447802666672">+44 7802 666 672</a></li>
+          <li><a href="/contact/">Send a message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 NourNest Ltd. Company 16629708. Registered in England &amp; Wales.</div>
+      <div>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

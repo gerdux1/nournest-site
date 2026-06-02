@@ -320,6 +320,52 @@ nav.site ul a:hover { color: var(--cta); }
 .area-tile:nth-child(3) { background: linear-gradient(135deg, var(--ink), var(--green)); }
 .area-tile:nth-child(4) { background: linear-gradient(135deg, var(--gold), var(--caramel)); color: var(--ink); }
 
+/* Guide cards (home page London guides callout) */
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.guide-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem 1.75rem 1.75rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.guide-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.guide-card .guide-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.7rem;
+}
+.guide-card h3 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  margin: 0 0 0.7rem;
+  color: var(--ink);
+}
+.guide-card p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0 0 1.2rem;
+  flex: 1;
+}
+.guide-card .guide-link {
+  font-size: 0.9rem;
+  color: var(--green);
+  font-weight: 500;
+}
+.section-soft { background: var(--bg-soft); }
+
 /* Two-column split */
 .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: center; }
 .split.reverse > *:first-child { order: 2; }
@@ -457,6 +503,7 @@ input:focus, textarea:focus, select:focus {
   .properties-grid, .properties-grid.cols-4 { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; gap: 2rem; }
   .areas-grid { grid-template-columns: repeat(2, 1fr); }
+  .guide-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .section-head { flex-direction: column; align-items: flex-start; }
   .split { grid-template-columns: 1fr; gap: 2rem; }

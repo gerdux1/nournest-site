@@ -74,6 +74,23 @@ ANCHOR_LABELS = {
 }
 
 
+def places_by_tag(places, tag):
+    return [p for p in places if tag in p.get("tags", [])]
+
+
+def nearest_listings_to_point(lat, lng, listings, n=3):
+    """For a theme/itinerary hub point, find n nearest NourNest listings."""
+    enriched = []
+    for item in listings:
+        ilat, ilng = item.get("lat"), item.get("lng")
+        if not ilat or not ilng:
+            continue
+        d = haversine_km(lat, lng, ilat, ilng)
+        enriched.append((d, item))
+    enriched.sort(key=lambda x: x[0])
+    return enriched[:n]
+
+
 def render_nearby_html(nearby):
     """Build the 'What's nearby' card block for a listing page."""
     if not nearby:
@@ -638,6 +655,662 @@ AREA_DESCRIPTORS = {
 }
 
 
+# ---------------- Theme pages (/london/<theme>/) ----------------
+
+THEME_TEMPLATE = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title} — NourNest Apartments</title>
+<meta name="description" content="{meta_description}">
+<link rel="canonical" href="https://nournestapartments.com/london/{slug}/">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+[
+  {{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "{title}",
+    "description": "{meta_description}",
+    "url": "https://nournestapartments.com/london/{slug}/",
+    "numberOfItems": {place_count},
+    "itemListOrder": "https://schema.org/ItemListUnordered"
+  }},
+  {{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{faq_json}]
+  }},
+  {{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" }},
+      {{ "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/discover/" }},
+      {{ "@type": "ListItem", "position": 3, "name": "{title}", "item": "https://nournestapartments.com/london/{slug}/" }}
+    ]
+  }}
+]
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<style>
+  .theme-hero {{ padding: 5rem 0 2rem; background: var(--bg-soft); }}
+  .theme-hero .kicker {{ color: var(--orange); }}
+  .theme-hero h1 {{ max-width: 22ch; margin: 0.4rem 0 1.2rem; }}
+  .theme-hero p.lead {{ max-width: 56ch; color: var(--ink-soft); font-size: 1.15rem; line-height: 1.55; }}
+
+  .place-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }}
+  .place-card {{ background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem; transition: box-shadow 0.2s, transform 0.2s; }}
+  .place-card:hover {{ box-shadow: var(--shadow); transform: translateY(-2px); }}
+  .place-card h3 {{ font-family: var(--serif); font-size: 1.15rem; margin: 0 0 0.4rem; }}
+  .place-card .place-meta {{ color: var(--muted); font-size: 0.85rem; margin: 0 0 0.6rem; letter-spacing: 0.02em; }}
+  .place-card .place-blurb {{ color: var(--ink-soft); font-size: 0.93rem; margin: 0; line-height: 1.5; }}
+  .place-card .place-area {{ display: inline-block; margin-top: 0.8rem; font-size: 0.78rem; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; }}
+
+  .section-heading {{ display: flex; align-items: baseline; gap: 1rem; margin: 3rem 0 0.6rem; flex-wrap: wrap; }}
+  .section-heading h2 {{ margin: 0; }}
+  .section-heading .count {{ color: var(--muted); font-size: 0.95rem; }}
+
+  .listings-strip {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.5rem 0 3rem; }}
+  .listings-strip .property-card {{ background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.2s; }}
+  .listings-strip .property-card:hover {{ box-shadow: var(--shadow-lg); }}
+  .listings-strip .property-card .img {{ aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-soft), var(--green)); }}
+  .listings-strip .property-card .img img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
+  .listings-strip .property-card .body {{ padding: 1rem 1.2rem 1.2rem; }}
+  .listings-strip .property-card h3 {{ font-family: var(--serif); font-size: 1.05rem; margin: 0 0 0.3rem; }}
+  .listings-strip .property-card .meta {{ font-size: 0.85rem; color: var(--muted); margin: 0; }}
+
+  .faq-list {{ max-width: 760px; margin: 3rem 0; }}
+  .faq-list details {{ border-bottom: 1px solid var(--line); padding: 1.2rem 0; }}
+  .faq-list summary {{ font-family: var(--serif); font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--ink); }}
+  .faq-list summary::-webkit-details-marker {{ display: none; }}
+  .faq-list summary::after {{ content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }}
+  .faq-list details[open] summary::after {{ content: '−'; }}
+  .faq-list details p {{ color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }}
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
+    <ul>
+      <li><a href="/listings/">Apartments</a></li>
+      <li><a href="/discover/">Discover London</a></li>
+      <li><a href="/property-management/">Management</a></li>
+      <li><a href="/private-residences/">Private Residences</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <a href="https://nournestapartments.bookingsboom.com/?lang=en" class="btn small nav-cta" target="_blank" rel="noopener">Book a stay</a>
+  </div>
+</nav>
+
+<header class="theme-hero">
+  <div class="container">
+    <p style="margin-bottom: 0.5rem;"><a href="/discover/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <div class="kicker">{kicker}</div>
+    <h1>{title}</h1>
+    <p class="lead">{intro}</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+{place_sections}
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Apartments well-placed for this</h2>
+      <span class="count">{listing_count} of our apartments, hand-picked for {short_title}</span>
+    </div>
+    <div class="listings-strip">
+      {listings_html}
+    </div>
+    <p style="text-align: center;"><a href="/listings/" class="btn">See all apartments</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Questions about {short_title}</h2>
+    <div class="faq-list">
+      {faq_html}
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <div class="kicker">Plan your stay</div>
+    <h2>Need help choosing the right apartment?</h2>
+    <p>Tell us how many guests, when, and any specifics — we'll send you 2-3 options matched to {short_title}.</p>
+    <a href="/contact/" class="btn">Ask for a recommendation</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="logo" style="display: inline-block; margin-bottom: 1rem;" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="56"></a>
+        <p>Boutique short-let management and curated guest experience for London properties. Director-led. Independently run.</p>
+      </div>
+      <div>
+        <h4>Stays</h4>
+        <ul>
+          <li><a href="/listings/">All apartments</a></li>
+          <li><a href="/discover/">Discover London</a></li>
+          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Search availability</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>London guides</h4>
+        <ul>
+          <li><a href="/london/halal/">Halal-friendly London</a></li>
+          <li><a href="/london/with-kids/">London with kids</a></li>
+          <li><a href="/london/perfect-saturday/">Perfect Saturday in London</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@nournestapartments.com">hello@nournestapartments.com</a></li>
+          <li><a href="tel:+447802666672">+44 7802 666 672</a></li>
+          <li><a href="/contact/">Send a message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 NourNest Ltd. Company 16629708. Registered in England &amp; Wales.</div>
+      <div>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+'''
+
+
+# Themes: each = filter + content. tags is OR-matched against place.tags.
+THEMES = {
+    "halal": {
+        "title": "Halal-friendly London",
+        "short_title": "halal-friendly stays",
+        "kicker": "Guest guide · Halal",
+        "meta_description": "Halal restaurants, mosques and prayer facilities near every NourNest apartment in London. Hand-picked by our team. Director-managed apartments for Muslim travellers, Ramadan, Eid and family stays.",
+        "intro": "Where to eat, where to pray, and which of our apartments put you closest. Hand-picked by our team for Muslim travellers, Ramadan visitors, and Gulf families staying long.",
+        "sections": [
+            {"heading": "Halal restaurants worth crossing London for", "tag": "halal", "anchor": "eat"},
+            {"heading": "Mosques and prayer facilities", "tag": "prayer", "anchor": "see"},
+        ],
+        "anchor_point": (51.5167, -0.1632),
+        "faqs": [
+            {
+                "q": "Are NourNest apartments halal?",
+                "a": "Our apartments don't serve food — what we provide is a fully equipped kitchen so you can cook with your own ingredients. Many guests stock up at the halal grocery shops on Edgware Road and Whitechapel before checking in. If you need a recommendation for a halal-friendly supermarket near your apartment, message us and we'll send you the nearest three."
+            },
+            {
+                "q": "Where's London's main halal restaurant area?",
+                "a": "Three concentrated halal areas: Edgware Road (Lebanese, Yemeni, Egyptian — open late), Whitechapel and Brick Lane (Bangladeshi, Pakistani, Punjabi — Tayyabs and Lahore Kebab House are walking distance from each other), and Stoke Newington Road in Dalston (Turkish ocakbasis). Our Edgware Road, Aldgate, Whitechapel and Hackney apartments put you in walking distance of these."
+            },
+            {
+                "q": "Is there a mosque near your apartments?",
+                "a": "London Central Mosque is on the edge of Regent's Park — walking distance from our Regents Park / Maida Vale apartments. East London Mosque on Whitechapel Road is walking distance from our Aldgate, Old Street and Hackney apartments. We'll send you the qibla direction for your specific apartment when you book."
+            },
+            {
+                "q": "Do your apartments have prayer mats?",
+                "a": "Most don't keep prayer mats as standard, but we can leave one in the apartment before you arrive — just ask in the booking notes. We can also send the qibla direction and the closest mosque for your apartment."
+            },
+            {
+                "q": "Can you arrange a private chef for Eid or family gatherings?",
+                "a": "Yes — we have a small network of halal private chefs we trust. Tell us guest numbers, dietary requirements and the apartment, and we'll send options. Typical lead time is 5-7 days."
+            },
+            {
+                "q": "Which apartments are best for a Ramadan stay?",
+                "a": "Apartments near Edgware Road, Whitechapel and Aldgate — close to large halal communities, supermarkets that stock dates and prayer essentials, and several mosques for Tarawih prayers. Our larger 2-bed and 3-bed apartments suit families breaking iftar together."
+            }
+        ]
+    },
+    "with-kids": {
+        "title": "London with kids",
+        "short_title": "family stays",
+        "kicker": "Guest guide · Family",
+        "meta_description": "London with kids — free museums, playgrounds, splash fountains and family-friendly restaurants near every NourNest apartment. Hand-picked by parents.",
+        "intro": "Free museums, magical playgrounds, indoor escape routes for rainy days, and which of our apartments put you closest to the good stuff.",
+        "sections": [
+            {"heading": "Free museums kids actually love", "tag": "kids-free", "anchor": "see"},
+            {"heading": "More family favourites — parks, eats and walks", "tag": "kids", "anchor": "do"},
+        ],
+        "anchor_point": (51.5074, -0.1278),
+        "faqs": [
+            {
+                "q": "Are NourNest apartments family-friendly?",
+                "a": "Our 2-bed, 3-bed and 4-bed apartments are designed for families — full kitchens for cooking, washer-dryer for the inevitable laundry, sofa beds in living rooms where useful. Tell us your kids' ages and we'll send the apartment that fits best."
+            },
+            {
+                "q": "Do you provide cots or high chairs?",
+                "a": "Yes — we can arrange a travel cot and a high chair for your stay. Mention it when you book and we'll make sure they're in the apartment on arrival, no extra charge."
+            },
+            {
+                "q": "Which areas of London are best with kids?",
+                "a": "South Kensington (three free family museums in one square mile: Natural History, Science, V&A), Regent's Park (zoo + park + the playground), Bloomsbury (Coram's Fields, British Museum), and Kensington Gardens (Diana playground + the splash fountain). Our apartments in these areas are popular with families for this reason."
+            },
+            {
+                "q": "Is London Underground stroller-friendly?",
+                "a": "Some stations are step-free, many aren't. For families with strollers we recommend buses (every red bus has a step-free door and ramp), the Elizabeth line, and most Overground stations. Black cabs are stroller-friendly. We can send you a step-free route from your apartment to anywhere."
+            },
+            {
+                "q": "Where can we eat with kids in central London?",
+                "a": "Dishoom King's Cross has high chairs and a kids menu. Borough Market is a great walking-and-eating outing. The Eagle Farringdon and other gastropubs are kid-friendly until early evening. Most Italian and Indian places welcome kids any time."
+            }
+        ]
+    },
+}
+
+
+def render_place_card(place):
+    return (
+        f'<a class="place-card" href="/discover/#{place["anchor"]}">\n'
+        f'  <h3>{place["name"]}</h3>\n'
+        f'  <p class="place-meta">{place["type"]}</p>\n'
+        f'  <p class="place-blurb">{place["blurb"]}</p>\n'
+        f'  <span class="place-area">{place["area"]}</span>\n'
+        f'</a>'
+    )
+
+
+def render_place_sections(sections, places):
+    blocks = []
+    seen_names = set()
+    for s in sections:
+        matches = [p for p in places_by_tag(places, s["tag"]) if p["name"] not in seen_names]
+        if not matches:
+            continue
+        for p in matches:
+            seen_names.add(p["name"])
+        cards = "\n      ".join(render_place_card(p) for p in matches)
+        blocks.append(
+            f'    <div class="section-heading">\n'
+            f'      <h2>{s["heading"]}</h2>\n'
+            f'      <span class="count">{len(matches)} hand-picked</span>\n'
+            f'    </div>\n'
+            f'    <div class="place-grid">\n'
+            f'      {cards}\n'
+            f'    </div>'
+        )
+    return "\n".join(blocks)
+
+
+def render_faq_html(faqs):
+    out = []
+    for f in faqs:
+        out.append(
+            f'      <details>\n'
+            f'        <summary>{f["q"]}</summary>\n'
+            f'        <p>{f["a"]}</p>\n'
+            f'      </details>'
+        )
+    return "\n".join(out)
+
+
+def render_faq_json(faqs):
+    items = []
+    for f in faqs:
+        q = f["q"].replace('"', '\\"')
+        a = f["a"].replace('"', '\\"')
+        items.append(
+            f'      {{ "@type": "Question", "name": "{q}", "acceptedAnswer": {{ "@type": "Answer", "text": "{a}" }} }}'
+        )
+    return ",\n".join(items)
+
+
+def render_theme_listing_card(item, pics):
+    _, thumb = picture_url(item["id"], pics)
+    img_html = (
+        f'<img src="{thumb}" alt="{item["nickname"]} — {item["area"]}, London" loading="lazy">'
+        if thumb else ""
+    )
+    return (
+        f'<a class="property-card" href="/listings/{page_slug(item)}/">\n'
+        f'  <div class="img">{img_html}</div>\n'
+        f'  <div class="body">\n'
+        f'    <h3>{item["nickname"]}</h3>\n'
+        f'    <p class="meta">{item["beds"]} bed · {item["baths"]} bath · sleeps {item["guests"]} · {item["area"]}</p>\n'
+        f'  </div>\n'
+        f'</a>'
+    )
+
+
+def build_theme_pages(listings, places, pics):
+    london_dir = ROOT / "london"
+    london_dir.mkdir(exist_ok=True)
+    deduped = dedupe(listings)
+    for slug, theme in THEMES.items():
+        place_sections_html = render_place_sections(theme["sections"], places)
+        faq_html = render_faq_html(theme["faqs"])
+        faq_json = render_faq_json(theme["faqs"])
+        seen = set()
+        for s in theme["sections"]:
+            for p in places_by_tag(places, s["tag"]):
+                seen.add(p["name"])
+        place_count = len(seen)
+        anchor_lat, anchor_lng = theme["anchor_point"]
+        nearest = nearest_listings_to_point(anchor_lat, anchor_lng, deduped, n=6)
+        listings_html = "\n      ".join(render_theme_listing_card(item, pics) for _, item in nearest)
+        page = THEME_TEMPLATE.format(
+            slug=slug,
+            title=theme["title"],
+            short_title=theme["short_title"],
+            kicker=theme["kicker"],
+            intro=theme["intro"],
+            meta_description=theme["meta_description"],
+            place_sections=place_sections_html,
+            place_count=place_count,
+            listings_html=listings_html,
+            listing_count=len(nearest),
+            faq_html=faq_html,
+            faq_json=faq_json,
+        )
+        out_dir = london_dir / slug
+        out_dir.mkdir(exist_ok=True)
+        (out_dir / "index.html").write_text(page, encoding="utf-8")
+        print(f"Wrote /london/{slug}/ ({place_count} places, {len(nearest)} apartments)")
+
+
+# ---------------- Perfect Saturday itinerary (/london/perfect-saturday/) ----------------
+
+ITINERARY_PERFECT_SATURDAY = {
+    "title": "A perfect Saturday in London",
+    "short_title": "the perfect Saturday",
+    "kicker": "Itinerary · Saturday",
+    "meta_description": "A perfect Saturday in London — hour by hour. Brunch in Shoreditch, Columbia Road flowers, Borough Market lunch, Hyde Park walk, pub dinner. Curated by NourNest, locals who manage apartments here.",
+    "intro": "Hour by hour, the Saturday a Londoner would actually plan. Brunch in the east, flowers and markets, lunch by the river, a walk through Hyde Park, pub dinner in town.",
+    "stops": [
+        {"time": "08:30", "title": "Brunch at Dishoom Shoreditch", "place_name": "Dishoom Shoreditch", "note": "Get there at opening — the bacon naan roll and house chai. About 45 minutes."},
+        {"time": "10:00", "title": "Columbia Road Flower Market", "place_name": "Columbia Road Flower Market", "note": "Walk over from Shoreditch. Sunday-only is the famous day but the Saturday vibe is calmer and you can still shop the cafés on the side streets. About an hour."},
+        {"time": "12:00", "title": "Borough Market for lunch", "place_name": "Borough Market", "note": "Tube or Uber to London Bridge. London's oldest food market — split it: one of you queues for Bread Ahead doughnuts, the other for Padella pasta (across the road, separate). Eat by the river."},
+        {"time": "14:30", "title": "South Bank walk to the South Kensington museums", "place_name": "Natural History Museum", "note": "Walk along the river past the Tate Modern and the Eye, then Tube District line to South Kensington. The Natural History Museum is free — the blue whale hall and the dinosaurs. About 90 minutes."},
+        {"time": "16:30", "title": "Hyde Park or Kensington Gardens", "place_name": "Diana Memorial Playground", "note": "Walk into Kensington Gardens. If you have kids the Diana playground is magical; without, walk the Serpentine and grab a coffee at the Serpentine Galleries."},
+        {"time": "18:30", "title": "Pub stop in Clerkenwell", "place_name": "The Eagle Farringdon", "note": "Tube to Farringdon. The Eagle is the pub that invented the gastropub. Pint, sit down, take a breath."},
+        {"time": "20:00", "title": "Dinner at St. John", "place_name": "St. John Restaurant", "note": "Five minutes' walk from the Eagle. Fergus Henderson's nose-to-tail temple — book a few weeks ahead. About two hours. If St. John is full, Morito on Exmouth Market is around the corner."},
+        {"time": "22:30", "title": "Nightcap at Nightjar", "place_name": "Nightjar", "note": "Tube to Old Street. Speakeasy basement bar with live jazz Wed-Sat and world-class cocktails. Book ahead."},
+    ],
+    "anchor_point": (51.5215, -0.1019),
+    "faqs": [
+        {"q": "Does this itinerary work on a Sunday?", "a": "Mostly yes — Columbia Road Flower Market is famously a Sunday-only event so swap that in. Borough Market is closed on Sundays, so swap it for a long Sunday roast at The Eagle Farringdon or St. John instead."},
+        {"q": "How much walking is involved?", "a": "About 6-8 km across the day, broken up by Tube and Uber. Comfortable shoes essential. If you're not up for walking, the whole itinerary works as Uber stops."},
+        {"q": "Can we do this with kids?", "a": "Yes — kids will love the Borough Market, the Natural History Museum (free), the Diana playground (free), and the river walk. Swap Nightjar for an earlier dinner. See our [London with kids](/london/with-kids/) guide for more."},
+        {"q": "Which apartment is best-placed for this itinerary?", "a": "Anything in Shoreditch, Hoxton, Old Street, Farringdon or Clerkenwell — all the stops are walking or one Tube stop away. We'll match you to a specific apartment if you tell us guest count and dates."}
+    ]
+}
+
+
+ITINERARY_TEMPLATE = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title} — NourNest Apartments</title>
+<meta name="description" content="{meta_description}">
+<link rel="canonical" href="https://nournestapartments.com/london/{slug}/">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+[
+  {{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "{title}",
+    "description": "{meta_description}",
+    "url": "https://nournestapartments.com/london/{slug}/",
+    "numberOfItems": {stop_count},
+    "itemListOrder": "https://schema.org/ItemListOrderAscending",
+    "itemListElement": [{itinerary_json}]
+  }},
+  {{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{faq_json}]
+  }},
+  {{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" }},
+      {{ "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/discover/" }},
+      {{ "@type": "ListItem", "position": 3, "name": "{title}", "item": "https://nournestapartments.com/london/{slug}/" }}
+    ]
+  }}
+]
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<style>
+  .theme-hero {{ padding: 5rem 0 2rem; background: var(--bg-soft); }}
+  .theme-hero .kicker {{ color: var(--orange); }}
+  .theme-hero h1 {{ max-width: 22ch; margin: 0.4rem 0 1.2rem; }}
+  .theme-hero p.lead {{ max-width: 56ch; color: var(--ink-soft); font-size: 1.15rem; line-height: 1.55; }}
+
+  .itinerary {{ max-width: 760px; margin: 3rem 0; }}
+  .stop {{ display: grid; grid-template-columns: 90px 1fr; column-gap: 2rem; padding: 1.8rem 0; border-bottom: 1px dashed var(--line); position: relative; }}
+  .stop:last-child {{ border-bottom: none; }}
+  .stop .time {{ font-family: var(--serif); color: var(--orange); font-size: 1.4rem; font-variant-numeric: tabular-nums; }}
+  .stop h3 {{ font-family: var(--serif); margin: 0 0 0.5rem; font-size: 1.3rem; color: var(--ink); }}
+  .stop h3 a {{ color: var(--ink); text-decoration: none; }}
+  .stop h3 a:hover {{ color: var(--orange); }}
+  .stop .note {{ color: var(--ink-soft); margin: 0; line-height: 1.55; }}
+
+  .listings-strip {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.5rem 0 3rem; }}
+  .listings-strip .property-card {{ background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.2s; }}
+  .listings-strip .property-card:hover {{ box-shadow: var(--shadow-lg); }}
+  .listings-strip .property-card .img {{ aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-soft), var(--green)); }}
+  .listings-strip .property-card .img img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
+  .listings-strip .property-card .body {{ padding: 1rem 1.2rem 1.2rem; }}
+  .listings-strip .property-card h3 {{ font-family: var(--serif); font-size: 1.05rem; margin: 0 0 0.3rem; }}
+  .listings-strip .property-card .meta {{ font-size: 0.85rem; color: var(--muted); margin: 0; }}
+
+  .faq-list {{ max-width: 760px; margin: 3rem 0; }}
+  .faq-list details {{ border-bottom: 1px solid var(--line); padding: 1.2rem 0; }}
+  .faq-list summary {{ font-family: var(--serif); font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--ink); }}
+  .faq-list summary::-webkit-details-marker {{ display: none; }}
+  .faq-list summary::after {{ content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }}
+  .faq-list details[open] summary::after {{ content: '−'; }}
+  .faq-list details p {{ color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }}
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
+    <ul>
+      <li><a href="/listings/">Apartments</a></li>
+      <li><a href="/discover/">Discover London</a></li>
+      <li><a href="/property-management/">Management</a></li>
+      <li><a href="/private-residences/">Private Residences</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <a href="https://nournestapartments.bookingsboom.com/?lang=en" class="btn small nav-cta" target="_blank" rel="noopener">Book a stay</a>
+  </div>
+</nav>
+
+<header class="theme-hero">
+  <div class="container">
+    <p style="margin-bottom: 0.5rem;"><a href="/discover/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <div class="kicker">{kicker}</div>
+    <h1>{title}</h1>
+    <p class="lead">{intro}</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="itinerary">
+      {stops_html}
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <h2>Apartments well-placed for this Saturday</h2>
+    <p class="lead" style="color: var(--muted); max-width: 56ch; margin: 0.4rem 0 2rem;">All within walking or one Tube stop from the morning brunch and the dinner stops.</p>
+    <div class="listings-strip">
+      {listings_html}
+    </div>
+    <p style="text-align: center;"><a href="/listings/" class="btn">See all apartments</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Questions about this itinerary</h2>
+    <div class="faq-list">
+      {faq_html}
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <div class="kicker">Plan your stay</div>
+    <h2>Want a Saturday itinerary tailored to your group?</h2>
+    <p>Tell us guest count, kids, dietary requirements and the date — we'll send you a hand-built itinerary like this one, matched to the apartment you book.</p>
+    <a href="/contact/" class="btn">Ask for a tailored itinerary</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="logo" style="display: inline-block; margin-bottom: 1rem;" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="56"></a>
+        <p>Boutique short-let management and curated guest experience for London properties. Director-led. Independently run.</p>
+      </div>
+      <div>
+        <h4>Stays</h4>
+        <ul>
+          <li><a href="/listings/">All apartments</a></li>
+          <li><a href="/discover/">Discover London</a></li>
+          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Search availability</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>London guides</h4>
+        <ul>
+          <li><a href="/london/halal/">Halal-friendly London</a></li>
+          <li><a href="/london/with-kids/">London with kids</a></li>
+          <li><a href="/london/perfect-saturday/">Perfect Saturday in London</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@nournestapartments.com">hello@nournestapartments.com</a></li>
+          <li><a href="tel:+447802666672">+44 7802 666 672</a></li>
+          <li><a href="/contact/">Send a message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 NourNest Ltd. Company 16629708. Registered in England &amp; Wales.</div>
+      <div>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+'''
+
+
+def render_itinerary_stops(stops, places):
+    by_name = {p["name"]: p for p in places}
+    out = []
+    for s in stops:
+        place = by_name.get(s["place_name"])
+        title_html = (
+            f'<a href="/discover/#{place["anchor"]}">{s["title"]}</a>'
+            if place else s["title"]
+        )
+        out.append(
+            f'      <div class="stop">\n'
+            f'        <div class="time">{s["time"]}</div>\n'
+            f'        <div>\n'
+            f'          <h3>{title_html}</h3>\n'
+            f'          <p class="note">{s["note"]}</p>\n'
+            f'        </div>\n'
+            f'      </div>'
+        )
+    return "\n".join(out)
+
+
+def render_itinerary_json(stops):
+    items = []
+    for i, s in enumerate(stops, start=1):
+        name = (s["title"]).replace('"', '\\"')
+        items.append(
+            f'      {{ "@type": "ListItem", "position": {i}, "name": "{s["time"]} — {name}" }}'
+        )
+    return ",\n".join(items)
+
+
+def build_itinerary_pages(listings, places, pics):
+    london_dir = ROOT / "london"
+    london_dir.mkdir(exist_ok=True)
+    deduped = dedupe(listings)
+    slug = "perfect-saturday"
+    it = ITINERARY_PERFECT_SATURDAY
+    stops_html = render_itinerary_stops(it["stops"], places)
+    faq_html = render_faq_html(it["faqs"])
+    faq_json = render_faq_json(it["faqs"])
+    itinerary_json = render_itinerary_json(it["stops"])
+    anchor_lat, anchor_lng = it["anchor_point"]
+    nearest = nearest_listings_to_point(anchor_lat, anchor_lng, deduped, n=6)
+    listings_html = "\n      ".join(render_theme_listing_card(item, pics) for _, item in nearest)
+    page = ITINERARY_TEMPLATE.format(
+        slug=slug,
+        title=it["title"],
+        short_title=it["short_title"],
+        kicker=it["kicker"],
+        intro=it["intro"],
+        meta_description=it["meta_description"],
+        stops_html=stops_html,
+        stop_count=len(it["stops"]),
+        itinerary_json=itinerary_json,
+        listings_html=listings_html,
+        faq_html=faq_html,
+        faq_json=faq_json,
+    )
+    out_dir = london_dir / slug
+    out_dir.mkdir(exist_ok=True)
+    (out_dir / "index.html").write_text(page, encoding="utf-8")
+    print(f"Wrote /london/{slug}/ ({len(it['stops'])} stops, {len(nearest)} apartments)")
+
+
 def build_property_pages(listings, pics, places):
     deduped = dedupe(listings)
     listings_dir = ROOT / "listings"
@@ -703,6 +1376,9 @@ SITEMAP_HEAD = '''<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>https://nournestapartments.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://nournestapartments.com/listings/</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://nournestapartments.com/discover/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nournestapartments.com/london/halal/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nournestapartments.com/london/with-kids/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://nournestapartments.com/london/perfect-saturday/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/property-management/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://nournestapartments.com/about/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://nournestapartments.com/contact/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -732,6 +1408,8 @@ def main():
     chip_html, cards_html, count = render_listings_index(listings)
     build_listings_page(chip_html, cards_html, count)
     build_property_pages(listings, pics, places)
+    build_theme_pages(listings, places, pics)
+    build_itinerary_pages(listings, places, pics)
     build_sitemap(listings)
 
 

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>London with kids — NourNest Apartments</title>
+<meta name="description" content="London with kids — free museums, playgrounds, splash fountains and family-friendly restaurants near every NourNest apartment. Hand-picked by parents.">
+<link rel="canonical" href="https://nournestapartments.com/london/with-kids/">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "London with kids",
+    "description": "London with kids — free museums, playgrounds, splash fountains and family-friendly restaurants near every NourNest apartment. Hand-picked by parents.",
+    "url": "https://nournestapartments.com/london/with-kids/",
+    "numberOfItems": 24,
+    "itemListOrder": "https://schema.org/ItemListUnordered"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [      { "@type": "Question", "name": "Are NourNest apartments family-friendly?", "acceptedAnswer": { "@type": "Answer", "text": "Our 2-bed, 3-bed and 4-bed apartments are designed for families — full kitchens for cooking, washer-dryer for the inevitable laundry, sofa beds in living rooms where useful. Tell us your kids' ages and we'll send the apartment that fits best." } },
+      { "@type": "Question", "name": "Do you provide cots or high chairs?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — we can arrange a travel cot and a high chair for your stay. Mention it when you book and we'll make sure they're in the apartment on arrival, no extra charge." } },
+      { "@type": "Question", "name": "Which areas of London are best with kids?", "acceptedAnswer": { "@type": "Answer", "text": "South Kensington (three free family museums in one square mile: Natural History, Science, V&A), Regent's Park (zoo + park + the playground), Bloomsbury (Coram's Fields, British Museum), and Kensington Gardens (Diana playground + the splash fountain). Our apartments in these areas are popular with families for this reason." } },
+      { "@type": "Question", "name": "Is London Underground stroller-friendly?", "acceptedAnswer": { "@type": "Answer", "text": "Some stations are step-free, many aren't. For families with strollers we recommend buses (every red bus has a step-free door and ramp), the Elizabeth line, and most Overground stations. Black cabs are stroller-friendly. We can send you a step-free route from your apartment to anywhere." } },
+      { "@type": "Question", "name": "Where can we eat with kids in central London?", "acceptedAnswer": { "@type": "Answer", "text": "Dishoom King's Cross has high chairs and a kids menu. Borough Market is a great walking-and-eating outing. The Eagle Farringdon and other gastropubs are kid-friendly until early evening. Most Italian and Indian places welcome kids any time." } }]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" },
+      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/discover/" },
+      { "@type": "ListItem", "position": 3, "name": "London with kids", "item": "https://nournestapartments.com/london/with-kids/" }
+    ]
+  }
+]
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<style>
+  .theme-hero { padding: 5rem 0 2rem; background: var(--bg-soft); }
+  .theme-hero .kicker { color: var(--orange); }
+  .theme-hero h1 { max-width: 22ch; margin: 0.4rem 0 1.2rem; }
+  .theme-hero p.lead { max-width: 56ch; color: var(--ink-soft); font-size: 1.15rem; line-height: 1.55; }
+
+  .place-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+  .place-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem; transition: box-shadow 0.2s, transform 0.2s; }
+  .place-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .place-card h3 { font-family: var(--serif); font-size: 1.15rem; margin: 0 0 0.4rem; }
+  .place-card .place-meta { color: var(--muted); font-size: 0.85rem; margin: 0 0 0.6rem; letter-spacing: 0.02em; }
+  .place-card .place-blurb { color: var(--ink-soft); font-size: 0.93rem; margin: 0; line-height: 1.5; }
+  .place-card .place-area { display: inline-block; margin-top: 0.8rem; font-size: 0.78rem; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .section-heading { display: flex; align-items: baseline; gap: 1rem; margin: 3rem 0 0.6rem; flex-wrap: wrap; }
+  .section-heading h2 { margin: 0; }
+  .section-heading .count { color: var(--muted); font-size: 0.95rem; }
+
+  .listings-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.5rem 0 3rem; }
+  .listings-strip .property-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.2s; }
+  .listings-strip .property-card:hover { box-shadow: var(--shadow-lg); }
+  .listings-strip .property-card .img { aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-soft), var(--green)); }
+  .listings-strip .property-card .img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .listings-strip .property-card .body { padding: 1rem 1.2rem 1.2rem; }
+  .listings-strip .property-card h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 0.3rem; }
+  .listings-strip .property-card .meta { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+  .faq-list { max-width: 760px; margin: 3rem 0; }
+  .faq-list details { border-bottom: 1px solid var(--line); padding: 1.2rem 0; }
+  .faq-list summary { font-family: var(--serif); font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--ink); }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary::after { content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }
+  .faq-list details[open] summary::after { content: '−'; }
+  .faq-list details p { color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
+    <ul>
+      <li><a href="/listings/">Apartments</a></li>
+      <li><a href="/discover/">Discover London</a></li>
+      <li><a href="/property-management/">Management</a></li>
+      <li><a href="/private-residences/">Private Residences</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <a href="https://nournestapartments.bookingsboom.com/?lang=en" class="btn small nav-cta" target="_blank" rel="noopener">Book a stay</a>
+  </div>
+</nav>
+
+<header class="theme-hero">
+  <div class="container">
+    <p style="margin-bottom: 0.5rem;"><a href="/discover/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <div class="kicker">Guest guide · Family</div>
+    <h1>London with kids</h1>
+    <p class="lead">Free museums, magical playgrounds, indoor escape routes for rainy days, and which of our apartments put you closest to the good stuff.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Free museums kids actually love</h2>
+      <span class="count">6 hand-picked</span>
+    </div>
+    <div class="place-grid">
+      <a class="place-card" href="/discover/#see">
+  <h3>The British Museum</h3>
+  <p class="place-meta">Museum · Free · Iconic</p>
+  <p class="place-blurb">Rosetta Stone + world-class collection</p>
+  <span class="place-area">Bloomsbury</span>
+</a>
+      <a class="place-card" href="/discover/#see">
+  <h3>Natural History Museum</h3>
+  <p class="place-meta">Museum · Free · Dinosaurs</p>
+  <p class="place-blurb">Diplodocus, blue whale, free — top kids day out in London</p>
+  <span class="place-area">South Kensington</span>
+</a>
+      <a class="place-card" href="/discover/#see">
+  <h3>Science Museum</h3>
+  <p class="place-meta">Museum · Free · Hands-on</p>
+  <p class="place-blurb">Free interactive science floor for kids, Apollo 10 capsule, IMAX</p>
+  <span class="place-area">South Kensington</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>Coram's Fields</h3>
+  <p class="place-meta">Playground · Kids-only</p>
+  <p class="place-blurb">7-acre playground only adults with kids may enter — free</p>
+  <span class="place-area">Bloomsbury</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>Diana Memorial Playground</h3>
+  <p class="place-meta">Playground · Magical</p>
+  <p class="place-blurb">Wooden pirate ship + sensory garden in Kensington Gardens</p>
+  <span class="place-area">Kensington Gardens</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>Princess Diana Memorial Fountain</h3>
+  <p class="place-meta">Water feature · Splash</p>
+  <p class="place-blurb">Kids paddle in the granite fountain on hot days — free</p>
+  <span class="place-area">Hyde Park</span>
+</a>
+    </div>
+    <div class="section-heading">
+      <h2>More family favourites — parks, eats and walks</h2>
+      <span class="count">18 hand-picked</span>
+    </div>
+    <div class="place-grid">
+      <a class="place-card" href="/discover/#eat">
+  <h3>Granger & Co. Clerkenwell</h3>
+  <p class="place-meta">All-day · Australian</p>
+  <p class="place-blurb">Ricotta hotcakes, sunny brunch</p>
+  <span class="place-area">Clerkenwell</span>
+</a>
+      <a class="place-card" href="/discover/#eat">
+  <h3>Roses Café</h3>
+  <p class="place-meta">Café · Brunch</p>
+  <p class="place-blurb">Neighbourhood brunch spot</p>
+  <span class="place-area">Shoreditch</span>
+</a>
+      <a class="place-card" href="/discover/#eat">
+  <h3>Poppies Fish & Chips</h3>
+  <p class="place-meta">Fish & chips · Classic</p>
+  <p class="place-blurb">1950s-style chippy done properly</p>
+  <span class="place-area">Spitalfields</span>
+</a>
+      <a class="place-card" href="/discover/#eat">
+  <h3>Dishoom King's Cross</h3>
+  <p class="place-meta">Indian · KX outpost</p>
+  <p class="place-blurb">Largest Dishoom in a railway shed</p>
+  <span class="place-area">King's Cross</span>
+</a>
+      <a class="place-card" href="/discover/#eat">
+  <h3>Mandi London</h3>
+  <p class="place-meta">Halal Yemeni</p>
+  <p class="place-blurb">Authentic Yemeni mandi — slow-cooked lamb on rice, halal</p>
+  <span class="place-area">Edgware Road</span>
+</a>
+      <a class="place-card" href="/discover/#eat">
+  <h3>Kabul House</h3>
+  <p class="place-meta">Halal Afghan</p>
+  <p class="place-blurb">Family-run Afghan kababs and qabili pulao, halal</p>
+  <span class="place-area">Whitechapel</span>
+</a>
+      <a class="place-card" href="/discover/#eat">
+  <h3>Chai Naasto</h3>
+  <p class="place-meta">Halal Indian street</p>
+  <p class="place-blurb">Mumbai-style halal street food — chaat, kati rolls</p>
+  <span class="place-area">Hammersmith</span>
+</a>
+      <a class="place-card" href="/discover/#drink">
+  <h3>Sky Garden</h3>
+  <p class="place-meta">Skyline · Free</p>
+  <p class="place-blurb">Top of the Walkie-Talkie, free entry</p>
+  <span class="place-area">City</span>
+</a>
+      <a class="place-card" href="/discover/#see">
+  <h3>Kensington Palace</h3>
+  <p class="place-meta">Palace · Royal</p>
+  <p class="place-blurb">Where William and Kate live</p>
+  <span class="place-area">Kensington Gardens</span>
+</a>
+      <a class="place-card" href="/discover/#see">
+  <h3>The Postal Museum</h3>
+  <p class="place-meta">Museum · Niche</p>
+  <p class="place-blurb">Five centuries of postal history + Mail Rail</p>
+  <span class="place-area">Clerkenwell</span>
+</a>
+      <a class="place-card" href="/discover/#see">
+  <h3>Sea Life London Aquarium</h3>
+  <p class="place-meta">Aquarium · Family</p>
+  <p class="place-blurb">Sharks, penguins, jellyfish — kids' day saver</p>
+  <span class="place-area">South Bank</span>
+</a>
+      <a class="place-card" href="/discover/#see">
+  <h3>London Transport Museum</h3>
+  <p class="place-meta">Museum · Family</p>
+  <p class="place-blurb">Climb old buses, drive Tube trains — top toddler-to-10 spot</p>
+  <span class="place-area">Covent Garden</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>Regent's Canal towpath</h3>
+  <p class="place-meta">Walk · Iconic</p>
+  <p class="place-blurb">Little Venice to Camden walk</p>
+  <span class="place-area">Little Venice</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>Hampstead Heath</h3>
+  <p class="place-meta">Green space · Wild</p>
+  <p class="place-blurb">320 hectares of properly wild London</p>
+  <span class="place-area">North London</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>The Regent's Park</h3>
+  <p class="place-meta">Park · Manicured</p>
+  <p class="place-blurb">Royal Park with rose gardens + zoo</p>
+  <span class="place-area">Marylebone</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>Camden Market</h3>
+  <p class="place-meta">Market · Daily</p>
+  <p class="place-blurb">Lock-side food + vintage stalls</p>
+  <span class="place-area">Camden Town</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>London Zoo</h3>
+  <p class="place-meta">Zoo · Family</p>
+  <p class="place-blurb">World's oldest scientific zoo</p>
+  <span class="place-area">Regent's Park</span>
+</a>
+      <a class="place-card" href="/discover/#do">
+  <h3>Borough Market</h3>
+  <p class="place-meta">Market · Daily food</p>
+  <p class="place-blurb">London's oldest food market — best Tues-Sat from 10am</p>
+  <span class="place-area">London Bridge</span>
+</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Apartments well-placed for this</h2>
+      <span class="count">6 of our apartments, hand-picked for family stays</span>
+    </div>
+    <div class="listings-strip">
+      <a class="property-card" href="/listings/embankment-lukasz/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1738855956/tenants/Londonelite%20property%20management%20ltd/listings/Embankment-Lukasz-Ops/pictures/IMG-20250120-WA1120_d9kzjj.png" alt="Embankment - Lukasz — Charing Cross / Embankment, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Embankment - Lukasz</h3>
+    <p class="meta">2 bed · 1 bath · sleeps 5 · Charing Cross / Embankment</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/mayfair-2bed/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1779388614/tenants/NourNest/listings5BalfourPlace2BDRpictures/R6M28738-HDR_x6rv5c.png" alt="MAYFAIR 2BED — Mayfair, London" loading="lazy"></div>
+  <div class="body">
+    <h3>MAYFAIR 2BED</h3>
+    <p class="meta">2 bed · 1 bath · sleeps 7 · Mayfair</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/euston-2-szymon-flat-2/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1768486159/IMG-20250519-WA0508_v9rtzs.png" alt="Euston #2 - Szymon - Flat 2 — Euston / Kings Cross, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Euston #2 - Szymon - Flat 2</h3>
+    <p class="meta">1 bed · 1 bath · sleeps 4 · Euston / Kings Cross</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/russell-square-flat-34-szymon/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1766166632/tenants/NourNest/listingsRusselSquareflat34pictures/WhatsApp_Image_2025-12-19_at_1.41.30_PM_1_ils2jz.png" alt="Russell Square flat 34 - Szymon — Russell Square / Bloomsbury, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Russell Square flat 34 - Szymon</h3>
+    <p class="meta">2 bed · 2 bath · sleeps 6 · Russell Square / Bloomsbury</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/pimlico-szymon/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1751369291/tenants/NourNest/listings/Pimlico-Blaze-Main%287.8%29/pictures/IMG-20250506-WA0119_fuyvs1.png" alt="Pimlico - Szymon — Pimlico, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Pimlico - Szymon</h3>
+    <p class="meta">3 bed · 2 bath · sleeps 8 · Pimlico</p>
+  </div>
+</a>
+      <a class="property-card" href="/listings/edgware-rd-szymon/">
+  <div class="img"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1739882990/tenants/NourNest/listings/Edgware-Anna/pictures/IMG-20250217-WA0609_aqub2l.png" alt="Edgware Rd - Szymon — Edgware Road / Marylebone, London" loading="lazy"></div>
+  <div class="body">
+    <h3>Edgware Rd - Szymon</h3>
+    <p class="meta">4 bed · 2 bath · sleeps 12 · Edgware Road / Marylebone</p>
+  </div>
+</a>
+    </div>
+    <p style="text-align: center;"><a href="/listings/" class="btn">See all apartments</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Questions about family stays</h2>
+    <div class="faq-list">
+            <details>
+        <summary>Are NourNest apartments family-friendly?</summary>
+        <p>Our 2-bed, 3-bed and 4-bed apartments are designed for families — full kitchens for cooking, washer-dryer for the inevitable laundry, sofa beds in living rooms where useful. Tell us your kids' ages and we'll send the apartment that fits best.</p>
+      </details>
+      <details>
+        <summary>Do you provide cots or high chairs?</summary>
+        <p>Yes — we can arrange a travel cot and a high chair for your stay. Mention it when you book and we'll make sure they're in the apartment on arrival, no extra charge.</p>
+      </details>
+      <details>
+        <summary>Which areas of London are best with kids?</summary>
+        <p>South Kensington (three free family museums in one square mile: Natural History, Science, V&A), Regent's Park (zoo + park + the playground), Bloomsbury (Coram's Fields, British Museum), and Kensington Gardens (Diana playground + the splash fountain). Our apartments in these areas are popular with families for this reason.</p>
+      </details>
+      <details>
+        <summary>Is London Underground stroller-friendly?</summary>
+        <p>Some stations are step-free, many aren't. For families with strollers we recommend buses (every red bus has a step-free door and ramp), the Elizabeth line, and most Overground stations. Black cabs are stroller-friendly. We can send you a step-free route from your apartment to anywhere.</p>
+      </details>
+      <details>
+        <summary>Where can we eat with kids in central London?</summary>
+        <p>Dishoom King's Cross has high chairs and a kids menu. Borough Market is a great walking-and-eating outing. The Eagle Farringdon and other gastropubs are kid-friendly until early evening. Most Italian and Indian places welcome kids any time.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <div class="kicker">Plan your stay</div>
+    <h2>Need help choosing the right apartment?</h2>
+    <p>Tell us how many guests, when, and any specifics — we'll send you 2-3 options matched to family stays.</p>
+    <a href="/contact/" class="btn">Ask for a recommendation</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="logo" style="display: inline-block; margin-bottom: 1rem;" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="56"></a>
+        <p>Boutique short-let management and curated guest experience for London properties. Director-led. Independently run.</p>
+      </div>
+      <div>
+        <h4>Stays</h4>
+        <ul>
+          <li><a href="/listings/">All apartments</a></li>
+          <li><a href="/discover/">Discover London</a></li>
+          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Search availability</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>London guides</h4>
+        <ul>
+          <li><a href="/london/halal/">Halal-friendly London</a></li>
+          <li><a href="/london/with-kids/">London with kids</a></li>
+          <li><a href="/london/perfect-saturday/">Perfect Saturday in London</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@nournestapartments.com">hello@nournestapartments.com</a></li>
+          <li><a href="tel:+447802666672">+44 7802 666 672</a></li>
+          <li><a href="/contact/">Send a message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 NourNest Ltd. Company 16629708. Registered in England &amp; Wales.</div>
+      <div>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
