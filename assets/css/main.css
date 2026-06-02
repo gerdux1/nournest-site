@@ -123,8 +123,12 @@ nav.site .nav-inner {
   color: var(--ink);
   letter-spacing: 0.01em;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 .logo span { color: var(--green); font-style: italic; }
+.logo img { display: block; max-height: 44px; width: auto; }
+footer.site .logo img { max-height: 56px; }
 nav.site ul {
   list-style: none;
   display: flex;
