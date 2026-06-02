@@ -107,6 +107,49 @@
   }
   .book-row .left { flex: 1; min-width: 250px; }
   .book-row p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+  .nearby { background: var(--bg-soft); padding: 4rem 0; margin-top: 3rem; border-radius: var(--radius-lg); }
+  .nearby .kicker { margin-bottom: 0.4rem; }
+  .nearby h2 { margin-bottom: 0.6rem; }
+  .nearby .lead { color: var(--muted); margin-bottom: 2.5rem; max-width: 56ch; }
+  .nearby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+  .nearby-col h3 {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .nearby-col ul { list-style: none; padding: 0; margin: 0; }
+  .nearby-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    column-gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.92rem;
+  }
+  .nearby-row:last-child { border-bottom: none; }
+  .nearby-row a { grid-column: 1; grid-row: 1; color: var(--ink); text-decoration: none; }
+  .nearby-row a:hover { color: var(--orange); }
+  .nearby-row strong { font-weight: 600; }
+  .nearby-type { grid-column: 1; grid-row: 2; color: var(--muted); font-size: 0.82rem; }
+  .nearby-dist {
+    grid-column: 2; grid-row: 1 / span 2;
+    align-self: center;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
 </style>
 </head>
 <body>
@@ -163,7 +206,50 @@
       <h2>Cancellation</h2>
       <p>Cancellation terms are listed on the booking page. We'll always try to be reasonable if life changes — talk to us before clicking cancel.</p>
     </div>
+  </div>
+</section>
 
+<section class="nearby section-soft">
+  <div class="container">
+    <div class="kicker">What's nearby</div>
+    <h2>Walking distance from this apartment</h2>
+    <p class="lead">Distances measured from the apartment to each place, as the crow flies. Walking time is usually a little longer.</p>
+    <div class="nearby-grid">
+    <div class="nearby-col">
+      <h3>Eat</h3>
+      <ul>
+        <li class="nearby-row"><a href="/discover/#eat"><strong>Casa Tua King's Cross</strong></a><span class="nearby-type">Italian · Stylish</span><span class="nearby-dist">500 m</span></li>
+        <li class="nearby-row"><a href="/discover/#eat"><strong>Dishoom King's Cross</strong></a><span class="nearby-type">Indian · KX outpost</span><span class="nearby-dist">500 m</span></li>
+      </ul>
+    </div>
+    <div class="nearby-col">
+      <h3>Drink</h3>
+      <ul>
+        <li class="nearby-row"><a href="/discover/#drink"><strong>Camino King's Cross</strong></a><span class="nearby-type">Spanish · Tapas</span><span class="nearby-dist">200 m</span></li>
+        <li class="nearby-row"><a href="/discover/#drink"><strong>Bourne & Hollingsworth Bldgs</strong></a><span class="nearby-type">All-day bar</span><span class="nearby-dist">1.2 km</span></li>
+      </ul>
+    </div>
+    <div class="nearby-col">
+      <h3>See</h3>
+      <ul>
+        <li class="nearby-row"><a href="/discover/#see"><strong>The British Library</strong></a><span class="nearby-type">Library · Free</span><span class="nearby-dist">300 m</span></li>
+        <li class="nearby-row"><a href="/discover/#see"><strong>The Postal Museum</strong></a><span class="nearby-type">Museum · Niche</span><span class="nearby-dist">850 m</span></li>
+      </ul>
+    </div>
+    <div class="nearby-col">
+      <h3>Do</h3>
+      <ul>
+        <li class="nearby-row"><a href="/discover/#do"><strong>Everyman King's Cross</strong></a><span class="nearby-type">Cinema · Independent</span><span class="nearby-dist">600 m</span></li>
+        <li class="nearby-row"><a href="/discover/#do"><strong>Camden Market</strong></a><span class="nearby-type">Market · Daily</span><span class="nearby-dist">2.0 km</span></li>
+      </ul>
+    </div>
+    </div>
+    <p style="margin-top: 2rem;"><a href="/discover/">See the full London guide →</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
     <div class="book-row">
       <div class="left">
         <h3 style="margin: 0 0 0.4rem;">Questions before booking?</h3>

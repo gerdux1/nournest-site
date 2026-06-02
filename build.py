@@ -11,14 +11,112 @@ Run: python3 build.py
 """
 
 import json
+import math
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data" / "listings.json"
 PICS = ROOT / "data" / "pictures.json"
+PLACES = ROOT / "data" / "places.json"
 
 CLOUDINARY_BASE = "https://res.cloudinary.com/do4tedxg6/image/upload"
+
+
+# ---------------- What's nearby (distance to curated places) ----------------
+
+def haversine_km(lat1, lng1, lat2, lng2):
+    """Great-circle distance in km between two lat/lng points."""
+    R = 6371.0
+    phi1 = math.radians(lat1)
+    phi2 = math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlambda = math.radians(lng2 - lng1)
+    a = math.sin(dphi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return R * c
+
+
+def format_distance(km):
+    """Render distance for the UI: '350 m', '0.8 km', '2.3 km'."""
+    if km < 1.0:
+        return f"{int(round(km * 1000 / 50) * 50)} m"
+    return f"{km:.1f} km"
+
+
+def nearby_for_listing(listing_lat, listing_lng, places, n_per_category=2):
+    """
+    Return a list of up to 8 places (2 per anchor: eat, drink, see, do),
+    nearest-first within each category.
+    """
+    if listing_lat is None or listing_lng is None:
+        return []
+    enriched = []
+    for p in places:
+        d = haversine_km(listing_lat, listing_lng, p["lat"], p["lng"])
+        enriched.append({**p, "distance_km": d})
+    enriched.sort(key=lambda x: x["distance_km"])
+    out = []
+    by_anchor = {"eat": [], "drink": [], "see": [], "do": []}
+    for p in enriched:
+        if len(by_anchor.get(p["anchor"], [])) < n_per_category:
+            by_anchor[p["anchor"]].append(p)
+    for anchor in ("eat", "drink", "see", "do"):
+        out.extend(by_anchor[anchor])
+    return out
+
+
+ANCHOR_LABELS = {
+    "eat": "Eat",
+    "drink": "Drink",
+    "see": "See",
+    "do": "Do",
+}
+
+
+def render_nearby_html(nearby):
+    """Build the 'What's nearby' card block for a listing page."""
+    if not nearby:
+        return ""
+    by_anchor = {"eat": [], "drink": [], "see": [], "do": []}
+    for p in nearby:
+        by_anchor.setdefault(p["anchor"], []).append(p)
+    blocks = []
+    for anchor in ("eat", "drink", "see", "do"):
+        items = by_anchor.get(anchor, [])
+        if not items:
+            continue
+        rows = []
+        for p in items:
+            dist = format_distance(p["distance_km"])
+            rows.append(
+                f'        <li class="nearby-row">'
+                f'<a href="/discover/#{p["anchor"]}"><strong>{p["name"]}</strong></a>'
+                f'<span class="nearby-type">{p["type"]}</span>'
+                f'<span class="nearby-dist">{dist}</span>'
+                f'</li>'
+            )
+        rows_html = "\n".join(rows)
+        blocks.append(
+            f'    <div class="nearby-col">\n'
+            f'      <h3>{ANCHOR_LABELS[anchor]}</h3>\n'
+            f'      <ul>\n{rows_html}\n      </ul>\n'
+            f'    </div>'
+        )
+    cols_html = "\n".join(blocks)
+    return (
+        '<section class="nearby section-soft">\n'
+        '  <div class="container">\n'
+        '    <div class="kicker">What\'s nearby</div>\n'
+        '    <h2>Walking distance from this apartment</h2>\n'
+        '    <p class="lead">Distances measured from the apartment to each place, as the crow flies. Walking time is usually a little longer.</p>\n'
+        '    <div class="nearby-grid">\n'
+        f'{cols_html}\n'
+        '    </div>\n'
+        '    <p style="margin-top: 2rem;"><a href="/discover/">See the full London guide →</a></p>\n'
+        '  </div>\n'
+        '</section>'
+    )
 
 
 def picture_url(listing_id, pics):
@@ -338,6 +436,49 @@ PROPERTY_TEMPLATE = '''<!DOCTYPE html>
   }}
   .book-row .left {{ flex: 1; min-width: 250px; }}
   .book-row p {{ margin: 0; color: var(--muted); font-size: 0.92rem; }}
+
+  .nearby {{ background: var(--bg-soft); padding: 4rem 0; margin-top: 3rem; border-radius: var(--radius-lg); }}
+  .nearby .kicker {{ margin-bottom: 0.4rem; }}
+  .nearby h2 {{ margin-bottom: 0.6rem; }}
+  .nearby .lead {{ color: var(--muted); margin-bottom: 2.5rem; max-width: 56ch; }}
+  .nearby-grid {{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }}
+  .nearby-col h3 {{
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }}
+  .nearby-col ul {{ list-style: none; padding: 0; margin: 0; }}
+  .nearby-row {{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    column-gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.92rem;
+  }}
+  .nearby-row:last-child {{ border-bottom: none; }}
+  .nearby-row a {{ grid-column: 1; grid-row: 1; color: var(--ink); text-decoration: none; }}
+  .nearby-row a:hover {{ color: var(--orange); }}
+  .nearby-row strong {{ font-weight: 600; }}
+  .nearby-type {{ grid-column: 1; grid-row: 2; color: var(--muted); font-size: 0.82rem; }}
+  .nearby-dist {{
+    grid-column: 2; grid-row: 1 / span 2;
+    align-self: center;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }}
 </style>
 </head>
 <body>
@@ -394,7 +535,13 @@ PROPERTY_TEMPLATE = '''<!DOCTYPE html>
       <h2>Cancellation</h2>
       <p>Cancellation terms are listed on the booking page. We'll always try to be reasonable if life changes — talk to us before clicking cancel.</p>
     </div>
+  </div>
+</section>
 
+{nearby_html}
+
+<section class="section">
+  <div class="container">
     <div class="book-row">
       <div class="left">
         <h3 style="margin: 0 0 0.4rem;">Questions before booking?</h3>
@@ -491,12 +638,13 @@ AREA_DESCRIPTORS = {
 }
 
 
-def build_property_pages(listings, pics):
+def build_property_pages(listings, pics, places):
     deduped = dedupe(listings)
     listings_dir = ROOT / "listings"
     listings_dir.mkdir(exist_ok=True)
     count = 0
     no_pic = 0
+    no_nearby = 0
     for item in deduped:
         slug = page_slug(item)
         beds = item["beds"]
@@ -517,6 +665,13 @@ def build_property_pages(listings, pics):
             hero_class = " no-image"
             no_pic += 1
 
+        lat = item.get("lat")
+        lng = item.get("lng")
+        nearby = nearby_for_listing(lat, lng, places) if lat and lng else []
+        nearby_html = render_nearby_html(nearby)
+        if not nearby:
+            no_nearby += 1
+
         page = PROPERTY_TEMPLATE.format(
             nickname=item["nickname"],
             slug=slug,
@@ -532,12 +687,13 @@ def build_property_pages(listings, pics):
             boom_url=boom_url(item),
             hero_img=hero_img,
             hero_class=hero_class,
+            nearby_html=nearby_html,
         )
         out_dir = listings_dir / slug
         out_dir.mkdir(exist_ok=True)
         (out_dir / "index.html").write_text(page, encoding="utf-8")
         count += 1
-    print(f"Wrote {count} property pages under /listings/ ({count - no_pic} with photos, {no_pic} without)")
+    print(f"Wrote {count} property pages under /listings/ ({count - no_pic} with photos, {no_pic} without, {count - no_nearby} with 'What's nearby')")
 
 
 # ---------------- Sitemap update ----------------
@@ -572,9 +728,10 @@ def main():
     data = json.loads(DATA.read_text())
     listings = data["listings"]
     pics = json.loads(PICS.read_text()) if PICS.exists() else {}
+    places = json.loads(PLACES.read_text())["places"] if PLACES.exists() else []
     chip_html, cards_html, count = render_listings_index(listings)
     build_listings_page(chip_html, cards_html, count)
-    build_property_pages(listings, pics)
+    build_property_pages(listings, pics, places)
     build_sitemap(listings)
 
 
