@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /private-residences/
+
+Sitemap: https://nournestapartments.com/sitemap.xml

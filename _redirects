@@ -1,0 +1,8 @@
+# Direct book CTAs to BOOM
+/book                       https://nournestapartments.bookingsboom.com/?lang=en  302
+/search                     https://nournestapartments.bookingsboom.com/listings?lang=en  302
+
+# Common typos / legacy paths
+/apartments                 /listings/  301
+/management                 /property-management/  301
+/private                    /private-residences/  301
