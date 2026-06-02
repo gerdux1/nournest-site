@@ -16,6 +16,20 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data" / "listings.json"
+PICS = ROOT / "data" / "pictures.json"
+
+CLOUDINARY_BASE = "https://res.cloudinary.com/do4tedxg6/image/upload"
+
+
+def picture_url(listing_id, pics):
+    """Build the Cloudinary URL for a listing. Returns large + small versions."""
+    path = pics.get(str(listing_id), "")
+    if not path:
+        return ("", "")
+    # Insert a Cloudinary transformation for hero size + thumbnail
+    hero = f"{CLOUDINARY_BASE}/c_fill,w_1600,h_900,q_auto,f_auto/{path}"
+    thumb = f"{CLOUDINARY_BASE}/c_fill,w_800,h_600,q_auto,f_auto/{path}"
+    return (hero, thumb)
 
 
 def boom_url(item):
@@ -289,7 +303,10 @@ PROPERTY_TEMPLATE = '''<!DOCTYPE html>
     position: relative;
     overflow: hidden;
   }}
-  .property-hero::after {{
+  .property-hero img {{
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }}
+  .property-hero.no-image::after {{
     content: '{nickname}';
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -347,7 +364,7 @@ PROPERTY_TEMPLATE = '''<!DOCTYPE html>
     <h1 style="margin-bottom: 0.5rem;">{nickname}</h1>
     <p class="lead" style="color: var(--muted);">{address}</p>
 
-    <div class="property-hero"></div>
+    <div class="property-hero{hero_class}">{hero_img}</div>
 
     <div class="meta-pills">
       <span class="meta-pill"><strong>{beds}</strong> bedroom{beds_plural}</span>
@@ -474,11 +491,12 @@ AREA_DESCRIPTORS = {
 }
 
 
-def build_property_pages(listings):
+def build_property_pages(listings, pics):
     deduped = dedupe(listings)
     listings_dir = ROOT / "listings"
     listings_dir.mkdir(exist_ok=True)
     count = 0
+    no_pic = 0
     for item in deduped:
         slug = page_slug(item)
         beds = item["beds"]
@@ -488,6 +506,16 @@ def build_property_pages(listings):
         address = item["address"]
         address_safe = address.replace('"', '\\"')
         area_desc = AREA_DESCRIPTORS.get(area, f"London's most {('vibrant' if 'central' in area.lower() else 'liveable')} neighbourhoods — easy access to the rest of the city, plenty within walking distance")
+
+        hero, _thumb = picture_url(item["id"], pics)
+        if hero:
+            alt = f"{item['nickname']} — {area} apartment from NourNest"
+            hero_img = f'<img src="{hero}" alt="{alt}" loading="eager" fetchpriority="high">'
+            hero_class = ""
+        else:
+            hero_img = ""
+            hero_class = " no-image"
+            no_pic += 1
 
         page = PROPERTY_TEMPLATE.format(
             nickname=item["nickname"],
@@ -502,12 +530,14 @@ def build_property_pages(listings):
             baths_plural="s" if baths != 1 else "",
             area_desc=area_desc,
             boom_url=boom_url(item),
+            hero_img=hero_img,
+            hero_class=hero_class,
         )
         out_dir = listings_dir / slug
         out_dir.mkdir(exist_ok=True)
         (out_dir / "index.html").write_text(page, encoding="utf-8")
         count += 1
-    print(f"Wrote {count} property pages under /listings/")
+    print(f"Wrote {count} property pages under /listings/ ({count - no_pic} with photos, {no_pic} without)")
 
 
 # ---------------- Sitemap update ----------------
@@ -541,9 +571,10 @@ def build_sitemap(listings):
 def main():
     data = json.loads(DATA.read_text())
     listings = data["listings"]
+    pics = json.loads(PICS.read_text()) if PICS.exists() else {}
     chip_html, cards_html, count = render_listings_index(listings)
     build_listings_page(chip_html, cards_html, count)
-    build_property_pages(listings)
+    build_property_pages(listings, pics)
     build_sitemap(listings)
 
 

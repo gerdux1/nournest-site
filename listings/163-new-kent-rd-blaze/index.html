@@ -72,7 +72,10 @@
     position: relative;
     overflow: hidden;
   }
-  .property-hero::after {
+  .property-hero img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .property-hero.no-image::after {
     content: '163 New Kent Rd - Blaze';
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -114,7 +117,6 @@
     <ul>
       <li><a href="/listings/">Apartments</a></li>
       <li><a href="/discover/">Discover London</a></li>
-      <li><a href="/faq/">Guest FAQ</a></li>
       <li><a href="/property-management/">Management</a></li>
       <li><a href="/private-residences/">Private Residences</a></li>
       <li><a href="/about/">About</a></li>
@@ -131,7 +133,7 @@
     <h1 style="margin-bottom: 0.5rem;">163 New Kent Rd - Blaze</h1>
     <p class="lead" style="color: var(--muted);">163 New Kent Road, Greater London, SE1 4AG, UK</p>
 
-    <div class="property-hero"></div>
+    <div class="property-hero"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_1600,h_900,q_auto,f_auto/v1750848039/tenants/NourNest/listings/163NewKentRd-Lukasz-main/pictures/WhatsApp_Image_2025-05-23_at_00.28.18_522c1337_riltic.png" alt="163 New Kent Rd - Blaze — Elephant & Castle apartment from NourNest" loading="eager" fetchpriority="high"></div>
 
     <div class="meta-pills">
       <span class="meta-pill"><strong>1</strong> bedroom</span>

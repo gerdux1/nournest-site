@@ -72,7 +72,10 @@
     position: relative;
     overflow: hidden;
   }
-  .property-hero::after {
+  .property-hero img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .property-hero.no-image::after {
     content: 'Hackney 1B - Szymon';
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -114,7 +117,6 @@
     <ul>
       <li><a href="/listings/">Apartments</a></li>
       <li><a href="/discover/">Discover London</a></li>
-      <li><a href="/faq/">Guest FAQ</a></li>
       <li><a href="/property-management/">Management</a></li>
       <li><a href="/private-residences/">Private Residences</a></li>
       <li><a href="/about/">About</a></li>
@@ -131,7 +133,7 @@
     <h1 style="margin-bottom: 0.5rem;">Hackney 1B - Szymon</h1>
     <p class="lead" style="color: var(--muted);">Flat 1, 23 Hackney Rd, London E2 7NX, UK</p>
 
-    <div class="property-hero"></div>
+    <div class="property-hero"><img src="https://res.cloudinary.com/do4tedxg6/image/upload/c_fill,w_1600,h_900,q_auto,f_auto/v1750682205/tenants/NourNest/listings/Hackney1B-Szymon-Main/pictures/IMG-20250421-WA0184_yiho9t.png" alt="Hackney 1B - Szymon — Hackney apartment from NourNest" loading="eager" fetchpriority="high"></div>
 
     <div class="meta-pills">
       <span class="meta-pill"><strong>1</strong> bedroom</span>
