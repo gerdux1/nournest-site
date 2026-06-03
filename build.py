@@ -1092,6 +1092,9 @@ LONDON_INDEX_TEMPLATE = '''<!DOCTYPE html>
   .guide-card h3 {{ font-family: var(--serif); font-size: 1.35rem; margin: 0 0 0.7rem; color: var(--ink); }}
   .guide-card p {{ color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; margin: 0 0 1.2rem; flex: 1; }}
   .guide-card .guide-link {{ font-size: 0.9rem; color: var(--green); font-weight: 500; }}
+  .area-tile-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin: 2rem 0; }}
+  .area-tile-link {{ background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; text-decoration: none; color: var(--ink); font-family: var(--serif); font-size: 1rem; transition: all 0.2s; display: block; }}
+  .area-tile-link:hover {{ background: var(--green); color: #fff; transform: translateY(-2px); box-shadow: var(--shadow); }}
 </style>
 </head>
 <body>
@@ -1124,9 +1127,11 @@ LONDON_INDEX_TEMPLATE = '''<!DOCTYPE html>
     <div class="guides-grid">
       {guides_html}
     </div>
-    <p style="text-align: center; color: var(--muted);">Looking for the master London list? See our <a href="/discover/">curated London places</a> — 67 hand-picked restaurants, bars, museums and walks.</p>
+    <p style="text-align: center; color: var(--muted);">Looking for the master London list? See our <a href="/discover/">curated London places</a> — 85 hand-picked restaurants, bars, museums and walks.</p>
   </div>
 </section>
+
+{area_tiles_section}
 
 <section class="cta-strip">
   <div class="container">
@@ -1182,8 +1187,8 @@ LONDON_INDEX_TEMPLATE = '''<!DOCTYPE html>
 '''
 
 
-def build_london_index(extra_pages=None):
-    """Write /london/index.html — the guides hub."""
+def build_london_index(extra_pages=None, area_slugs=None):
+    """Write /london/index.html — the guides hub + neighbourhood tiles."""
     london_dir = ROOT / "london"
     london_dir.mkdir(exist_ok=True)
     cards = []
@@ -1209,11 +1214,422 @@ def build_london_index(extra_pages=None):
                 f'      </a>'
             )
             footer_links.append(f'<li><a href="/london/{slug}/">{page["title"]}</a></li>')
+    area_tiles_html = ""
+    if area_slugs:
+        sorted_areas = sorted(area_slugs, key=lambda x: x[0])
+        tiles = "\n        ".join(
+            f'<a href="/london/{slug}/" class="area-tile-link">{area}</a>'
+            for area, slug in sorted_areas
+        )
+        area_tiles_html = (
+            '<section class="section section-soft">\n'
+            '  <div class="container">\n'
+            f'    <h2>Neighbourhoods we manage in</h2>\n'
+            f'    <p style="color: var(--muted); max-width: 56ch;">{len(sorted_areas)} London neighbourhoods — pick yours for the apartments and what\'s around.</p>\n'
+            '    <div class="area-tile-grid">\n'
+            f'        {tiles}\n'
+            '    </div>\n'
+            '  </div>\n'
+            '</section>'
+        )
     guides_html = "\n".join(cards)
     footer_guides_html = "\n          ".join(footer_links)
-    page = LONDON_INDEX_TEMPLATE.format(guides_html=guides_html, footer_guides_html=footer_guides_html)
+    page = LONDON_INDEX_TEMPLATE.format(
+        guides_html=guides_html,
+        footer_guides_html=footer_guides_html,
+        area_tiles_section=area_tiles_html,
+    )
     (london_dir / "index.html").write_text(page, encoding="utf-8")
-    print(f"Wrote /london/ index ({len(cards)} guides)")
+    print(f"Wrote /london/ index ({len(cards)} guides{f', {len(area_slugs)} areas' if area_slugs else ''})")
+
+
+# ---------------- Neighbourhood pages (/london/<area-slug>/) ----------------
+
+AREA_TEMPLATE = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{area} apartments — NourNest London short-let guide</title>
+<meta name="description" content="Boutique short-let apartments in {area}, London — {apt_count} hand-picked by NourNest. Where to eat, drink and walk in {area}. Director-managed apartments, book direct.">
+<link rel="canonical" href="https://nournestapartments.com/london/{slug}/">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+[
+  {{
+    "@context": "https://schema.org",
+    "@type": "Place",
+    "name": "{area}, London",
+    "description": "{area} is {area_desc}.",
+    "containedInPlace": {{ "@type": "City", "name": "London" }},
+    "url": "https://nournestapartments.com/london/{slug}/"
+  }},
+  {{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "NourNest apartments in {area}",
+    "numberOfItems": {apt_count}
+  }},
+  {{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{faq_json}]
+  }},
+  {{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" }},
+      {{ "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/london/" }},
+      {{ "@type": "ListItem", "position": 3, "name": "{area}", "item": "https://nournestapartments.com/london/{slug}/" }}
+    ]
+  }}
+]
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<style>
+  .area-hero {{ padding: 5rem 0 2rem; background: var(--bg-soft); }}
+  .area-hero .kicker {{ color: var(--orange); }}
+  .area-hero h1 {{ max-width: 22ch; margin: 0.4rem 0 1.2rem; }}
+  .area-hero p.lead {{ max-width: 60ch; color: var(--ink-soft); font-size: 1.15rem; line-height: 1.55; }}
+  .area-stats {{ display: flex; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }}
+  .area-stat strong {{ font-family: var(--serif); font-size: 1.7rem; color: var(--ink); display: block; line-height: 1.1; }}
+  .area-stat span {{ color: var(--muted); font-size: 0.85rem; letter-spacing: 0.04em; }}
+
+  .listings-strip {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.5rem 0 3rem; }}
+  .listings-strip .property-card {{ background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.2s; }}
+  .listings-strip .property-card:hover {{ box-shadow: var(--shadow-lg); }}
+  .listings-strip .property-card .img {{ aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-soft), var(--green)); }}
+  .listings-strip .property-card .img img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
+  .listings-strip .property-card .body {{ padding: 1rem 1.2rem 1.2rem; }}
+  .listings-strip .property-card h3 {{ font-family: var(--serif); font-size: 1.05rem; margin: 0 0 0.3rem; }}
+  .listings-strip .property-card .meta {{ font-size: 0.85rem; color: var(--muted); margin: 0; }}
+
+  .nearby-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin: 1.5rem 0; }}
+  .nearby-col h3 {{ font-family: var(--serif); font-size: 1.05rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 0.9rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); }}
+  .nearby-col ul {{ list-style: none; padding: 0; margin: 0; }}
+  .nearby-row {{ display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 1rem; padding: 0.7rem 0; border-bottom: 1px dashed var(--line); font-size: 0.92rem; }}
+  .nearby-row:last-child {{ border-bottom: none; }}
+  .nearby-row a {{ grid-column: 1; grid-row: 1; color: var(--ink); text-decoration: none; }}
+  .nearby-row a:hover {{ color: var(--orange); }}
+  .nearby-row strong {{ font-weight: 600; }}
+  .nearby-type {{ grid-column: 1; grid-row: 2; color: var(--muted); font-size: 0.82rem; }}
+  .nearby-dist {{ grid-column: 2; grid-row: 1 / span 2; align-self: center; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-size: 0.85rem; white-space: nowrap; }}
+
+  .related-guides {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }}
+  .related-guides a {{ background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; text-decoration: none; color: inherit; font-size: 0.95rem; transition: box-shadow 0.2s; }}
+  .related-guides a:hover {{ box-shadow: var(--shadow); }}
+  .related-guides a strong {{ display: block; font-family: var(--serif); font-size: 1.05rem; color: var(--ink); margin-bottom: 0.2rem; }}
+  .related-guides a span {{ color: var(--muted); font-size: 0.85rem; }}
+
+  .faq-list {{ max-width: 760px; margin: 3rem 0; }}
+  .faq-list details {{ border-bottom: 1px solid var(--line); padding: 1.2rem 0; }}
+  .faq-list summary {{ font-family: var(--serif); font-size: 1.1rem; cursor: pointer; list-style: none; color: var(--ink); }}
+  .faq-list summary::-webkit-details-marker {{ display: none; }}
+  .faq-list summary::after {{ content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }}
+  .faq-list details[open] summary::after {{ content: '−'; }}
+  .faq-list details p {{ color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }}
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
+    <ul>
+      <li><a href="/listings/">Apartments</a></li>
+      <li><a href="/london/">London guides</a></li>
+      <li><a href="/property-management/">Management</a></li>
+      <li><a href="/private-residences/">Private Residences</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <a href="https://nournestapartments.bookingsboom.com/?lang=en" class="btn small nav-cta" target="_blank" rel="noopener">Book a stay</a>
+  </div>
+</nav>
+
+<header class="area-hero">
+  <div class="container">
+    <p style="margin-bottom: 0.5rem;"><a href="/london/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <div class="kicker">Neighbourhood guide</div>
+    <h1>Short-let apartments in {area}</h1>
+    <p class="lead">{area} is {area_desc}. Hand-picked NourNest apartments here, plus where to eat, walk and spend the day.</p>
+    <div class="area-stats">
+      <div class="area-stat"><strong>{apt_count}</strong><span>NourNest apartment{apt_plural}</span></div>
+      <div class="area-stat"><strong>{nearby_count}</strong><span>nearby places curated</span></div>
+      <div class="area-stat"><strong>~{tube_min} min</strong><span>to central London</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>Apartments in {area}</h2>
+    <p class="lead" style="color: var(--muted); max-width: 60ch; margin: 0.4rem 0 2rem;">All directly managed by our team. Book through us — no platform between us.</p>
+    <div class="listings-strip">
+      {listings_html}
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <h2>What's around {area}</h2>
+    <p class="lead" style="color: var(--muted); max-width: 56ch; margin: 0.4rem 0 2rem;">Walking distance from the apartments — restaurants, bars, museums and walks.</p>
+    <div class="nearby-grid">
+      {nearby_html}
+    </div>
+    <p style="margin-top: 2rem;"><a href="/discover/">See the full London guide →</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Related London guides</h2>
+    <div class="related-guides">
+      <a href="/london/halal/"><strong>Halal-friendly London</strong><span>Restaurants + mosques</span></a>
+      <a href="/london/with-kids/"><strong>London with kids</strong><span>Free museums + playgrounds</span></a>
+      <a href="/london/sunday-roast/"><strong>Sunday roast</strong><span>Pub destinations</span></a>
+      <a href="/london/coffee-to-work/"><strong>Coffee shops to work from</strong><span>Wifi + plug + space</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Questions about {area}</h2>
+    <div class="faq-list">
+      {faq_html}
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <div class="kicker">Plan your stay</div>
+    <h2>Want help picking the right apartment in {area}?</h2>
+    <p>Tell us guest count, dates and what you're in London for — we'll send 2-3 options matched to {area}.</p>
+    <a href="/contact/" class="btn">Ask for a recommendation</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="logo" style="display: inline-block; margin-bottom: 1rem;" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="56"></a>
+        <p>Boutique short-let management and curated guest experience for London properties. Director-led. Independently run.</p>
+      </div>
+      <div>
+        <h4>Stays</h4>
+        <ul>
+          <li><a href="/listings/">All apartments</a></li>
+          <li><a href="/discover/">Discover London</a></li>
+          <li><a href="https://nournestapartments.bookingsboom.com/?lang=en" target="_blank" rel="noopener">Search availability</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>London guides</h4>
+        <ul>
+          <li><a href="/london/">All guides</a></li>
+          <li><a href="/london/halal/">Halal-friendly</a></li>
+          <li><a href="/london/with-kids/">With kids</a></li>
+          <li><a href="/london/sunday-roast/">Sunday roast</a></li>
+          <li><a href="/london/fish-and-chips/">Fish &amp; chips</a></li>
+          <li><a href="/london/coffee-to-work/">Coffee to work</a></li>
+          <li><a href="/london/perfect-saturday/">Perfect Saturday</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@nournestapartments.com">hello@nournestapartments.com</a></li>
+          <li><a href="tel:+447802666672">+44 7802 666 672</a></li>
+          <li><a href="/contact/">Send a message</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 NourNest Ltd. Company 16629708. Registered in England &amp; Wales.</div>
+      <div>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+'''
+
+
+# Distance from approximate centre of London (Trafalgar Square 51.5074, -0.1278).
+LONDON_CENTRE = (51.5074, -0.1278)
+
+
+def area_centroid(area, listings):
+    """Mean lat/lng of all listings in an area, or None if none."""
+    pts = [(l["lat"], l["lng"]) for l in listings if l.get("area") == area and l.get("lat") and l.get("lng")]
+    if not pts:
+        return None
+    return (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts))
+
+
+def estimate_tube_minutes(lat, lng):
+    """Crude minutes-to-central estimate from straight-line distance.
+    Calibrated against real Tube journey times: Shoreditch (4km) ≈ 15 min,
+    New Malden (15km) ≈ 45 min."""
+    d = haversine_km(lat, lng, LONDON_CENTRE[0], LONDON_CENTRE[1])
+    return max(10, int(round(d * 3 + 3)))
+
+
+def render_area_nearby(centroid_lat, centroid_lng, places, n_per_category=3):
+    """Like render_nearby_html but for a wider radius (3 per category)."""
+    enriched = []
+    for p in places:
+        d = haversine_km(centroid_lat, centroid_lng, p["lat"], p["lng"])
+        enriched.append({**p, "distance_km": d})
+    enriched.sort(key=lambda x: x["distance_km"])
+    by_anchor = {"eat": [], "drink": [], "see": [], "do": []}
+    for p in enriched:
+        if len(by_anchor.get(p["anchor"], [])) < n_per_category:
+            by_anchor.setdefault(p["anchor"], []).append(p)
+    blocks = []
+    for anchor in ("eat", "drink", "see", "do"):
+        items = by_anchor.get(anchor, [])
+        if not items:
+            continue
+        rows = []
+        for p in items:
+            dist = format_distance(p["distance_km"])
+            rows.append(
+                f'        <li class="nearby-row">'
+                f'<a href="/discover/#{p["anchor"]}"><strong>{p["name"]}</strong></a>'
+                f'<span class="nearby-type">{p["type"]}</span>'
+                f'<span class="nearby-dist">{dist}</span>'
+                f'</li>'
+            )
+        rows_html = "\n".join(rows)
+        blocks.append(
+            f'    <div class="nearby-col">\n'
+            f'      <h3>{ANCHOR_LABELS[anchor]}</h3>\n'
+            f'      <ul>\n{rows_html}\n      </ul>\n'
+            f'    </div>'
+        )
+    return "\n".join(blocks)
+
+
+AREA_FAQS_TEMPLATE = [
+    {
+        "q": "What's {area} known for?",
+        "a": "{area_desc_cap}. It's one of the neighbourhoods our guests come back to year after year."
+    },
+    {
+        "q": "How long from {area} to central London?",
+        "a": "About {tube_min} minutes by Tube to the West End — give or take depending on the line. We send every guest a step-by-step route from their apartment to wherever they're heading."
+    },
+    {
+        "q": "Where should I eat in {area}?",
+        "a": "Our /discover/ guide lists 85 hand-picked London places — filter to the ones nearest {area}. Quick wins: see the [Sunday roast](/london/sunday-roast/), [halal](/london/halal/), and [coffee to work](/london/coffee-to-work/) guides for area-relevant picks."
+    },
+    {
+        "q": "Is {area} family-friendly?",
+        "a": "Most of London is. For specifically kid-focused recommendations — free museums, playgrounds, splash fountains, kid-welcoming restaurants — see our [London with kids](/london/with-kids/) guide."
+    },
+    {
+        "q": "How do I book a NourNest apartment in {area}?",
+        "a": "Click any apartment above to see live availability and book direct. We don't use platforms — that means no extra service fee, and you talk directly to the team that manages the apartment. WhatsApp +44 7802 666 672 or email hello@nournestapartments.com if you'd like a recommendation."
+    }
+]
+
+
+def render_area_faqs_html(area, area_desc, tube_min):
+    out = []
+    for f in AREA_FAQS_TEMPLATE:
+        q = f["q"].format(area=area)
+        a_text = f["a"].format(
+            area=area,
+            area_desc=area_desc,
+            area_desc_cap=area_desc[0].upper() + area_desc[1:] if area_desc else "",
+            tube_min=tube_min,
+        )
+        # Render simple markdown links [text](url) as <a> tags
+        a_html = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', a_text)
+        out.append(
+            f'      <details>\n'
+            f'        <summary>{q}</summary>\n'
+            f'        <p>{a_html}</p>\n'
+            f'      </details>'
+        )
+    return "\n".join(out)
+
+
+def render_area_faqs_json(area, area_desc, tube_min):
+    out = []
+    for f in AREA_FAQS_TEMPLATE:
+        q = f["q"].format(area=area).replace('"', '\\"')
+        a_text = f["a"].format(
+            area=area,
+            area_desc=area_desc,
+            area_desc_cap=area_desc[0].upper() + area_desc[1:] if area_desc else "",
+            tube_min=tube_min,
+        )
+        # Schema.org JSON wants plain text — strip markdown link syntax
+        a_text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", a_text)
+        a_text = a_text.replace('"', '\\"')
+        out.append(
+            f'      {{ "@type": "Question", "name": "{q}", "acceptedAnswer": {{ "@type": "Answer", "text": "{a_text}" }} }}'
+        )
+    return ",\n".join(out)
+
+
+def build_area_pages(listings, places, pics):
+    london_dir = ROOT / "london"
+    london_dir.mkdir(exist_ok=True)
+    deduped = dedupe(listings)
+    by_area = {}
+    for item in deduped:
+        by_area.setdefault(item["area"], []).append(item)
+    written = 0
+    for area, items in by_area.items():
+        slug = area_slug(area)
+        centroid = area_centroid(area, deduped)
+        if not centroid:
+            continue
+        lat, lng = centroid
+        area_desc = AREA_DESCRIPTORS.get(area, f"a London neighbourhood worth a stay")
+        tube_min = estimate_tube_minutes(lat, lng)
+        listings_html = "\n      ".join(render_theme_listing_card(item, pics) for item in items)
+        nearby_html = render_area_nearby(lat, lng, places, n_per_category=3)
+        nearby_count = nearby_html.count("nearby-row")
+        faq_html = render_area_faqs_html(area, area_desc, tube_min)
+        faq_json = render_area_faqs_json(area, area_desc, tube_min)
+        page = AREA_TEMPLATE.format(
+            slug=slug,
+            area=area,
+            area_desc=area_desc,
+            apt_count=len(items),
+            apt_plural="s" if len(items) != 1 else "",
+            nearby_count=nearby_count,
+            tube_min=tube_min,
+            listings_html=listings_html,
+            nearby_html=nearby_html,
+            faq_html=faq_html,
+            faq_json=faq_json,
+        )
+        out_dir = london_dir / slug
+        out_dir.mkdir(exist_ok=True)
+        (out_dir / "index.html").write_text(page, encoding="utf-8")
+        written += 1
+    print(f"Wrote {written} neighbourhood pages under /london/<area>/")
+    return [(area, area_slug(area)) for area in by_area.keys()]
 
 
 def build_theme_pages(listings, places, pics):
@@ -1617,15 +2033,19 @@ SITEMAP_HEAD = '''<?xml version="1.0" encoding="UTF-8"?>
 SITEMAP_TAIL = '</urlset>\n'
 
 
-def build_sitemap(listings):
+def build_sitemap(listings, area_slugs=None):
     deduped = dedupe(listings)
     lines = [SITEMAP_HEAD]
     for item in deduped:
         slug = page_slug(item)
         lines.append(f'  <url><loc>https://nournestapartments.com/listings/{slug}/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>\n')
+    if area_slugs:
+        for area, slug in area_slugs:
+            lines.append(f'  <url><loc>https://nournestapartments.com/london/{slug}/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>\n')
     lines.append(SITEMAP_TAIL)
     (ROOT / "sitemap.xml").write_text("".join(lines), encoding="utf-8")
-    print(f"Wrote sitemap.xml with {len(deduped)} property pages")
+    extra = f" + {len(area_slugs)} neighbourhood pages" if area_slugs else ""
+    print(f"Wrote sitemap.xml with {len(deduped)} property pages{extra}")
 
 
 def main():
@@ -1638,8 +2058,9 @@ def main():
     build_property_pages(listings, pics, places)
     build_theme_pages(listings, places, pics)
     build_itinerary_pages(listings, places, pics)
-    build_london_index(extra_pages={"perfect-saturday": ITINERARY_PERFECT_SATURDAY})
-    build_sitemap(listings)
+    area_slugs = build_area_pages(listings, places, pics)
+    build_london_index(extra_pages={"perfect-saturday": ITINERARY_PERFECT_SATURDAY}, area_slugs=area_slugs)
+    build_sitemap(listings, area_slugs=area_slugs)
 
 
 if __name__ == "__main__":

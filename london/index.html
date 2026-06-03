@@ -37,6 +37,9 @@
   .guide-card h3 { font-family: var(--serif); font-size: 1.35rem; margin: 0 0 0.7rem; color: var(--ink); }
   .guide-card p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; margin: 0 0 1.2rem; flex: 1; }
   .guide-card .guide-link { font-size: 0.9rem; color: var(--green); font-weight: 500; }
+  .area-tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin: 2rem 0; }
+  .area-tile-link { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; text-decoration: none; color: var(--ink); font-family: var(--serif); font-size: 1rem; transition: all 0.2s; display: block; }
+  .area-tile-link:hover { background: var(--green); color: #fff; transform: translateY(-2px); box-shadow: var(--shadow); }
 </style>
 </head>
 <body>
@@ -104,7 +107,49 @@
         <span class="guide-link">Read the itinerary →</span>
       </a>
     </div>
-    <p style="text-align: center; color: var(--muted);">Looking for the master London list? See our <a href="/discover/">curated London places</a> — 67 hand-picked restaurants, bars, museums and walks.</p>
+    <p style="text-align: center; color: var(--muted);">Looking for the master London list? See our <a href="/discover/">curated London places</a> — 85 hand-picked restaurants, bars, museums and walks.</p>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <h2>Neighbourhoods we manage in</h2>
+    <p style="color: var(--muted); max-width: 56ch;">33 London neighbourhoods — pick yours for the apartments and what's around.</p>
+    <div class="area-tile-grid">
+        <a href="/london/aldgate/" class="area-tile-link">Aldgate</a>
+        <a href="/london/angel-islington/" class="area-tile-link">Angel / Islington</a>
+        <a href="/london/battersea/" class="area-tile-link">Battersea</a>
+        <a href="/london/charing-cross-embankment/" class="area-tile-link">Charing Cross / Embankment</a>
+        <a href="/london/crouch-end/" class="area-tile-link">Crouch End</a>
+        <a href="/london/edgware-road-marylebone/" class="area-tile-link">Edgware Road / Marylebone</a>
+        <a href="/london/elephant-castle/" class="area-tile-link">Elephant & Castle</a>
+        <a href="/london/euston-kings-cross/" class="area-tile-link">Euston / Kings Cross</a>
+        <a href="/london/farringdon-clerkenwell/" class="area-tile-link">Farringdon / Clerkenwell</a>
+        <a href="/london/finsbury-park/" class="area-tile-link">Finsbury Park</a>
+        <a href="/london/finsbury-park-green-lanes/" class="area-tile-link">Finsbury Park / Green Lanes</a>
+        <a href="/london/hackney/" class="area-tile-link">Hackney</a>
+        <a href="/london/hammersmith/" class="area-tile-link">Hammersmith</a>
+        <a href="/london/holloway/" class="area-tile-link">Holloway</a>
+        <a href="/london/hoxton/" class="area-tile-link">Hoxton</a>
+        <a href="/london/kensington/" class="area-tile-link">Kensington</a>
+        <a href="/london/kilburn-west-hampstead/" class="area-tile-link">Kilburn / West Hampstead</a>
+        <a href="/london/kings-cross/" class="area-tile-link">Kings Cross</a>
+        <a href="/london/little-venice/" class="area-tile-link">Little Venice</a>
+        <a href="/london/london-bridge/" class="area-tile-link">London Bridge</a>
+        <a href="/london/maida-vale/" class="area-tile-link">Maida Vale</a>
+        <a href="/london/marylebone-baker-street/" class="area-tile-link">Marylebone / Baker Street</a>
+        <a href="/london/mayfair/" class="area-tile-link">Mayfair</a>
+        <a href="/london/new-malden/" class="area-tile-link">New Malden</a>
+        <a href="/london/old-street-shoreditch/" class="area-tile-link">Old Street / Shoreditch</a>
+        <a href="/london/pimlico/" class="area-tile-link">Pimlico</a>
+        <a href="/london/queens-park/" class="area-tile-link">Queens Park</a>
+        <a href="/london/regents-park-maida-vale/" class="area-tile-link">Regents Park / Maida Vale</a>
+        <a href="/london/russell-square-bloomsbury/" class="area-tile-link">Russell Square / Bloomsbury</a>
+        <a href="/london/shepherd-s-bush/" class="area-tile-link">Shepherd's Bush</a>
+        <a href="/london/shoreditch/" class="area-tile-link">Shoreditch</a>
+        <a href="/london/tower-hill/" class="area-tile-link">Tower Hill</a>
+        <a href="/london/vauxhall/" class="area-tile-link">Vauxhall</a>
+    </div>
   </div>
 </section>
 
