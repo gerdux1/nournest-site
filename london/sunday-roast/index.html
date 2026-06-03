@@ -12,6 +12,31 @@
 [
   {
     "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "London's best Sunday roasts",
+    "description": "Where Londoners go for Sunday roast — the gastropubs, the dry-aged beef, and the apartments that put you closest. Hand-picked by NourNest.",
+    "url": "https://nournestapartments.com/london/sunday-roast/",
+    "datePublished": "2026-06-02",
+    "dateModified": "2026-06-03",
+    "author": {
+      "@type": "Organization",
+      "name": "NourNest Apartments",
+      "url": "https://nournestapartments.com/",
+      "founder": { "@type": "Person", "name": "Gerda Micke" }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NourNest Apartments",
+      "url": "https://nournestapartments.com/",
+      "logo": { "@type": "ImageObject", "url": "https://nournestapartments.com/assets/images/logo.png" }
+    },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".quick-answer"]
+    }
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "London's best Sunday roasts",
     "description": "Where Londoners go for Sunday roast — the gastropubs, the dry-aged beef, and the apartments that put you closest. Hand-picked by NourNest.",
@@ -33,7 +58,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" },
-      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/discover/" },
+      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/london/" },
       { "@type": "ListItem", "position": 3, "name": "London's best Sunday roasts", "item": "https://nournestapartments.com/london/sunday-roast/" }
     ]
   }
@@ -79,6 +104,10 @@
   .faq-list summary::after { content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }
   .faq-list details[open] summary::after { content: '−'; }
   .faq-list details p { color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }
+
+  .quick-answer { background: #fff; border-left: 4px solid var(--orange); border-radius: 4px; padding: 1.4rem 1.6rem; margin: 2.5rem 0 3rem; box-shadow: var(--shadow); }
+  .quick-answer .qa-label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 600; margin-bottom: 0.6rem; display: block; }
+  .quick-answer p { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); line-height: 1.55; margin: 0; }
 </style>
 </head>
 <body>
@@ -88,7 +117,7 @@
     <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
     <ul>
       <li><a href="/listings/">Apartments</a></li>
-      <li><a href="/discover/">Discover London</a></li>
+      <li><a href="/london/">London guides</a></li>
       <li><a href="/property-management/">Management</a></li>
       <li><a href="/private-residences/">Private Residences</a></li>
       <li><a href="/about/">About</a></li>
@@ -100,7 +129,7 @@
 
 <header class="theme-hero">
   <div class="container">
-    <p style="margin-bottom: 0.5rem;"><a href="/discover/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <p style="margin-bottom: 0.5rem;"><a href="/london/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
     <div class="kicker">Guest guide · Sunday roast</div>
     <h1>London's best Sunday roasts</h1>
     <p class="lead">Where Londoners actually go on a Sunday. Gastropub originals, Michelin pub-guide picks, and the dry-aged beef rooms — plus which of our apartments put you closest.</p>
@@ -109,6 +138,10 @@
 
 <section class="section">
   <div class="container">
+    <div class="quick-answer">
+      <span class="qa-label">Quick answer</span>
+      <p>London's destination Sunday roasts cluster in Farringdon, Clerkenwell, Islington, Hackney and Spitalfields. The classics: The Eagle Farringdon (the original gastropub), St. John (Fergus Henderson's nose-to-tail temple), Hawksmoor Spitalfields (dry-aged beef), The Marksman in Hackney (Michelin pub guide), and The Pig & Butcher in Islington. Book two to three weeks ahead. Most pubs serve roast 12:00-16:00 on Sundays only.</p>
+    </div>
     <div class="section-heading">
       <h2>Roast destinations worth booking ahead</h2>
       <span class="count">8 hand-picked</span>

@@ -12,6 +12,31 @@
 [
   {
     "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "London with kids",
+    "description": "London with kids — free museums, playgrounds, splash fountains and family-friendly restaurants near every NourNest apartment. Hand-picked by parents.",
+    "url": "https://nournestapartments.com/london/with-kids/",
+    "datePublished": "2026-06-02",
+    "dateModified": "2026-06-03",
+    "author": {
+      "@type": "Organization",
+      "name": "NourNest Apartments",
+      "url": "https://nournestapartments.com/",
+      "founder": { "@type": "Person", "name": "Gerda Micke" }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NourNest Apartments",
+      "url": "https://nournestapartments.com/",
+      "logo": { "@type": "ImageObject", "url": "https://nournestapartments.com/assets/images/logo.png" }
+    },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".quick-answer"]
+    }
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "London with kids",
     "description": "London with kids — free museums, playgrounds, splash fountains and family-friendly restaurants near every NourNest apartment. Hand-picked by parents.",
@@ -33,7 +58,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" },
-      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/discover/" },
+      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/london/" },
       { "@type": "ListItem", "position": 3, "name": "London with kids", "item": "https://nournestapartments.com/london/with-kids/" }
     ]
   }
@@ -79,6 +104,10 @@
   .faq-list summary::after { content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }
   .faq-list details[open] summary::after { content: '−'; }
   .faq-list details p { color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }
+
+  .quick-answer { background: #fff; border-left: 4px solid var(--orange); border-radius: 4px; padding: 1.4rem 1.6rem; margin: 2.5rem 0 3rem; box-shadow: var(--shadow); }
+  .quick-answer .qa-label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 600; margin-bottom: 0.6rem; display: block; }
+  .quick-answer p { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); line-height: 1.55; margin: 0; }
 </style>
 </head>
 <body>
@@ -88,7 +117,7 @@
     <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
     <ul>
       <li><a href="/listings/">Apartments</a></li>
-      <li><a href="/discover/">Discover London</a></li>
+      <li><a href="/london/">London guides</a></li>
       <li><a href="/property-management/">Management</a></li>
       <li><a href="/private-residences/">Private Residences</a></li>
       <li><a href="/about/">About</a></li>
@@ -100,7 +129,7 @@
 
 <header class="theme-hero">
   <div class="container">
-    <p style="margin-bottom: 0.5rem;"><a href="/discover/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <p style="margin-bottom: 0.5rem;"><a href="/london/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
     <div class="kicker">Guest guide · Family</div>
     <h1>London with kids</h1>
     <p class="lead">Free museums, magical playgrounds, indoor escape routes for rainy days, and which of our apartments put you closest to the good stuff.</p>
@@ -109,6 +138,10 @@
 
 <section class="section">
   <div class="container">
+    <div class="quick-answer">
+      <span class="qa-label">Quick answer</span>
+      <p>London's best free kids' attractions: the Natural History Museum, Science Museum, V&A and British Museum (all free, all indoors). For playgrounds: Coram's Fields (Bloomsbury — adults only with kids), Diana Memorial Playground (Kensington Gardens, pirate ship + sensory garden), and the Diana Memorial Fountain (splash on hot days). Best family neighbourhoods: South Kensington (three free museums in one square mile), Bloomsbury, and Kensington Gardens. NourNest apartments in these areas suit families with travel cot and high chair on request.</p>
+    </div>
     <div class="section-heading">
       <h2>Free museums kids actually love</h2>
       <span class="count">6 hand-picked</span>

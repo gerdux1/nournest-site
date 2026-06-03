@@ -12,6 +12,46 @@
 [
   {
     "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "A perfect Saturday in London",
+    "description": "A perfect Saturday in London — hour by hour. Brunch in Shoreditch, Columbia Road flowers, Borough Market lunch, Hyde Park walk, pub dinner. Curated by NourNest, locals who manage apartments here.",
+    "url": "https://nournestapartments.com/london/perfect-saturday/",
+    "datePublished": "2026-06-02",
+    "dateModified": "2026-06-03",
+    "author": {
+      "@type": "Organization",
+      "name": "NourNest Apartments",
+      "url": "https://nournestapartments.com/",
+      "founder": { "@type": "Person", "name": "Gerda Micke" }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NourNest Apartments",
+      "url": "https://nournestapartments.com/",
+      "logo": { "@type": "ImageObject", "url": "https://nournestapartments.com/assets/images/logo.png" }
+    },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".quick-answer"]
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "A perfect Saturday in London",
+    "description": "A perfect Saturday in London — hour by hour. Brunch in Shoreditch, Columbia Road flowers, Borough Market lunch, Hyde Park walk, pub dinner. Curated by NourNest, locals who manage apartments here.",
+    "totalTime": "PT14H",
+    "step": [      { "@type": "HowToStep", "position": 1, "name": "08:30 — Brunch at Dishoom Shoreditch", "text": "Get there at opening — the bacon naan roll and house chai. About 45 minutes." },
+      { "@type": "HowToStep", "position": 2, "name": "10:00 — Columbia Road Flower Market", "text": "Walk over from Shoreditch. Sunday-only is the famous day but the Saturday vibe is calmer and you can still shop the cafés on the side streets. About an hour." },
+      { "@type": "HowToStep", "position": 3, "name": "12:00 — Borough Market for lunch", "text": "Tube or Uber to London Bridge. London's oldest food market — split it: one of you queues for Bread Ahead doughnuts, the other for Padella pasta (across the road, separate). Eat by the river." },
+      { "@type": "HowToStep", "position": 4, "name": "14:30 — South Bank walk to the South Kensington museums", "text": "Walk along the river past the Tate Modern and the Eye, then Tube District line to South Kensington. The Natural History Museum is free — the blue whale hall and the dinosaurs. About 90 minutes." },
+      { "@type": "HowToStep", "position": 5, "name": "16:30 — Hyde Park or Kensington Gardens", "text": "Walk into Kensington Gardens. If you have kids the Diana playground is magical; without, walk the Serpentine and grab a coffee at the Serpentine Galleries." },
+      { "@type": "HowToStep", "position": 6, "name": "18:30 — Pub stop in Clerkenwell", "text": "Tube to Farringdon. The Eagle is the pub that invented the gastropub. Pint, sit down, take a breath." },
+      { "@type": "HowToStep", "position": 7, "name": "20:00 — Dinner at St. John", "text": "Five minutes' walk from the Eagle. Fergus Henderson's nose-to-tail temple — book a few weeks ahead. About two hours. If St. John is full, Morito on Exmouth Market is around the corner." },
+      { "@type": "HowToStep", "position": 8, "name": "22:30 — Nightcap at Nightjar", "text": "Tube to Old Street. Speakeasy basement bar with live jazz Wed-Sat and world-class cocktails. Book ahead." }]
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "A perfect Saturday in London",
     "description": "A perfect Saturday in London — hour by hour. Brunch in Shoreditch, Columbia Road flowers, Borough Market lunch, Hyde Park walk, pub dinner. Curated by NourNest, locals who manage apartments here.",
@@ -40,7 +80,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nournestapartments.com/" },
-      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/discover/" },
+      { "@type": "ListItem", "position": 2, "name": "London guides", "item": "https://nournestapartments.com/london/" },
       { "@type": "ListItem", "position": 3, "name": "A perfect Saturday in London", "item": "https://nournestapartments.com/london/perfect-saturday/" }
     ]
   }
@@ -83,6 +123,10 @@
   .faq-list summary::after { content: '+'; float: right; color: var(--orange); font-size: 1.4rem; line-height: 1; }
   .faq-list details[open] summary::after { content: '−'; }
   .faq-list details p { color: var(--ink-soft); margin: 0.8rem 0 0; line-height: 1.6; }
+
+  .quick-answer { background: #fff; border-left: 4px solid var(--orange); border-radius: 4px; padding: 1.4rem 1.6rem; margin: 2.5rem 0 3rem; box-shadow: var(--shadow); }
+  .quick-answer .qa-label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 600; margin-bottom: 0.6rem; display: block; }
+  .quick-answer p { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); line-height: 1.55; margin: 0; }
 </style>
 </head>
 <body>
@@ -92,7 +136,7 @@
     <a href="/" class="logo" aria-label="NourNest Apartments"><img src="/assets/images/logo.png" alt="NourNest Apartments" height="44"></a>
     <ul>
       <li><a href="/listings/">Apartments</a></li>
-      <li><a href="/discover/">Discover London</a></li>
+      <li><a href="/london/">London guides</a></li>
       <li><a href="/property-management/">Management</a></li>
       <li><a href="/private-residences/">Private Residences</a></li>
       <li><a href="/about/">About</a></li>
@@ -104,7 +148,7 @@
 
 <header class="theme-hero">
   <div class="container">
-    <p style="margin-bottom: 0.5rem;"><a href="/discover/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
+    <p style="margin-bottom: 0.5rem;"><a href="/london/" style="font-size: 0.9rem; color: var(--muted);">← London guides</a></p>
     <div class="kicker">Itinerary · Saturday</div>
     <h1>A perfect Saturday in London</h1>
     <p class="lead">Hour by hour, the Saturday a Londoner would actually plan. Brunch in the east, flowers and markets, lunch by the river, a walk through Hyde Park, pub dinner in town.</p>
@@ -113,6 +157,10 @@
 
 <section class="section">
   <div class="container">
+    <div class="quick-answer">
+      <span class="qa-label">Quick answer</span>
+      <p>Brunch at Dishoom Shoreditch (08:30) → walk to Columbia Road Flower Market (10:00) → Tube to Borough Market for lunch (12:00) → South Bank walk to the South Kensington museums (14:30) → Hyde Park or Kensington Gardens (16:30) → pint at The Eagle Farringdon (18:30) → dinner at St. John (20:00) → nightcap at Nightjar (22:30). About 6-8 km walking total, broken up by Tube. The itinerary works as Uber stops too, and the morning half is excellent with kids.</p>
+    </div>
     <div class="itinerary">
             <div class="stop">
         <div class="time">08:30</div>
